@@ -78,8 +78,10 @@ theorem coinedTick_local {n : ℕ} (roots : Fin 240 → Site n)
     coinedTick roots C ψ (x, (d, a)) =
       coinedTick roots C φ (x, (d, a)) := by
   rw [coinedTick_apply, coinedTick_apply]
-  congr 1
-  funext b
-  exact h b
+  have hv : (fun b => ψ (x - roots d, (d, b))) =
+      (fun b => φ (x - roots d, (d, b))) := by
+    funext b
+    exact h b
+  rw [hv]
 
 end VOPM.UnitaryWalk
