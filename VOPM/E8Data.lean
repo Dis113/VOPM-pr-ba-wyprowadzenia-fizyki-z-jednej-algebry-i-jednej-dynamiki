@@ -19,6 +19,8 @@ or surplus entries a Lean type error.
 
 namespace VOPM.E8Data
 
+set_option maxRecDepth 8192
+
 /-- Doubled standard E₈ roots. Each vector has Euclidean norm squared 8. -/
 def doubledRoots : Vector (Fin 8 → ℤ) 240 :=
   ⟨#[
@@ -262,7 +264,7 @@ def doubledRoots : Vector (Fin 8 → ℤ) 240 :=
     ![(1 : ℤ), -1, 1, -1, -1, -1, -1, -1],
     ![(1 : ℤ), 1, -1, -1, -1, -1, -1, -1],
     ![(-1 : ℤ), -1, -1, -1, -1, -1, -1, -1]
-  ], by decide⟩
+  ], by rfl⟩
 
 /-- The integer coordinates of twice a standard E₈ root. -/
 def doubledRoot (d : Fin 240) : Fin 8 → ℤ :=
