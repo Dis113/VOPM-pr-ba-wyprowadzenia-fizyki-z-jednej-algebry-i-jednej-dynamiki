@@ -102,11 +102,12 @@ theorem probability_tick {n : ℕ} (roots : Fin 240 → Site n)
   change (∑ i : Mode n, Complex.normSq
     (ψ ((flowEquiv roots rot).symm i))) =
     ∑ i : Mode n, Complex.normSq (ψ i)
-  exact Equiv.sum_comp (flowEquiv roots rot).symm _
+  exact Equiv.sum_comp (flowEquiv roots rot).symm
+    (fun i : Mode n => Complex.normSq (ψ i))
 
 /-- The ordinary complex inner product for the finite configuration space. -/
 noncomputable def pairing {n : ℕ} (ψ φ : Wave n) : ℂ :=
-  ∑ i : Mode n, Complex.conj (ψ i) * φ i
+  ∑ i : Mode n, star (ψ i) * φ i
 
 /--
 Stronger than norm preservation: all complex inner products are preserved.
@@ -115,11 +116,12 @@ The one-step map is therefore a unitary basis permutation.
 theorem pairing_tick {n : ℕ} (roots : Fin 240 → Site n)
     (rot : Fin 8 ≃ Fin 8) (ψ φ : Wave n) :
     pairing (tick roots rot ψ) (tick roots rot φ) = pairing ψ φ := by
-  change (∑ i : Mode n, Complex.conj
+  change (∑ i : Mode n, star
     (ψ ((flowEquiv roots rot).symm i)) *
     φ ((flowEquiv roots rot).symm i)) =
-    ∑ i : Mode n, Complex.conj (ψ i) * φ i
-  exact Equiv.sum_comp (flowEquiv roots rot).symm _
+    ∑ i : Mode n, star (ψ i) * φ i
+  exact Equiv.sum_comp (flowEquiv roots rot).symm
+    (fun i : Mode n => star (ψ i) * φ i)
 
 /-- A directed neighboring edge is one of the 240 prescribed displacements. -/
 def DirectedNeighbor {n : ℕ} (roots : Fin 240 → Site n)
