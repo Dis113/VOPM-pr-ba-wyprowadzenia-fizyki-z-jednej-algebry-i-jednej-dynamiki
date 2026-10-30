@@ -61,7 +61,7 @@ lake exe cache get
 lake build
 ```
 
-Repozytorium przypina wersję Mathlib i odpowiadającą jej wersję Lean. GitHub Actions kompiluje bibliotekę i uruchamia niezależny checker, jeśli jest dostępny.
+Repozytorium przypina wersję Mathlib i odpowiadającą jej wersję Lean. GitHub Actions kompiluje bibliotekę w Lean (z kontrolą jądra Lean przy opracowaniu twierdzeń) oraz odrzuca znaczniki `sorry`, `admit` i nowe `axiom` w kodzie VOPM. Dodatkowy niezależny program `leanchecker` jest na razie wyłączony: w przypiętym środowisku Lean 4.36.0-rc2 / Mathlib zakończył się SIGSEGV (exit 139) mimo pomyślnej kompilacji; jego poprawność należy zbadać osobno.
 
 ## Kolejny etap
 
