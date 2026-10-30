@@ -59,3 +59,28 @@ W interpretacji kierunkowej na nieskończonej regularnej sieci, bez permutacji `
 - Nie uzyskaliśmy efektywnej symetrii Lorentza 3+1 ani pól Maxwella.
 
 **Wniosek:** znaleźliśmy jawny stabilny, przyczynowo lokalny *model pomocniczy*, który pokazuje, że niestabilność VOPM-001 nie jest nieuchronna dla każdej ewolucji dyskretnej. Następnie trzeba udowodnić tę właściwość dla dużo bardziej restrykcyjnego modelu, w którym pojedynczy węzeł ma dokładnie 8 amplitud zespolonych, a 240 kierunków to wyłącznie etykiety krawędzi i oddziaływań.
+
+
+## Rozszerzenie VOPM-002b: liniowe mieszanie ośmiu składowych
+
+Plik `VOPM/CoinedWalk.lean` dopuszcza lokalny operator `C : ℂ⁸ ≃ₗ[ℂ] ℂ⁸` (odwracalny liniowy transformator wewnętrznych amplitud) spełniający **jawnie założony** warunek unitarności:
+
+```text
+∀u v, Σ_a conj((C u)_a) (C v)_a = Σ_a conj(u_a) v_a.
+```
+
+Jeden takt to teraz:
+
+```text
+(U ψ)(x,d,a) = [ C (b ↦ ψ(x-r(d), d, b)) ]_a.
+```
+
+Formalny wynik `coinedTick_pairing` przenosi zachowanie iloczynu skalarnego
+z lokalnego operatora na całe 240-kanałowe pole. Twierdzenie
+`coinedTick_local` dowodzi, że **żadna amplituda z innego niż wskazany
+sąsiedniego węzła nie wpływa na dany wynik po tym takcie**.
+
+Ten moduł nie nadaje jeszcze `C` konkretnego oktonionowego wzoru:
+jego istnienie o zadanej własności to **założenie warunkowe**, a nie
+wyprowadzenie z VOPM. Rozszerzenie pozwala jednak badać prawdziwe
+superpozycje i interferencję po wyborze niefikcyjnego `C`.
