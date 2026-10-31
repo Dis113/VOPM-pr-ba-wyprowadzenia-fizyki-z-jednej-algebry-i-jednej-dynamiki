@@ -35,3 +35,6 @@ jobs:
             echo "Placeholders or new axioms detected in VOPM sources."
             exit 1
           fi
+
+      - name: Validate E8 primitive coordinates
+        run: python3 checks/check_e8_basis.py
