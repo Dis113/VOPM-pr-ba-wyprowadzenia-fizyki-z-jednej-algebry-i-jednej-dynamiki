@@ -88,4 +88,45 @@ theorem noRealPlanckAxialFrequency (a ρ ω δ : ℝ) (ha : a ≠ 0)
   exact noStablePlanckAxialMode a ρ ha hMatch
     (stableAtPi_of_real_dispersion ρ ω δ hdisp)
 
+
+/--
+Sharper axial test: at wave number 2π, integer-coordinate E8 roots
+contribute zero and the half-integral roots contribute 256.
+
+This is a conditional statement about the already specified linear
+centered-time update, not an E8 classification theorem.
+-/
+theorem axialSymbol_at_two_pi :
+    axialSymbol (2 * Real.pi) = 256 := by
+  have hc : Real.cos ((2 * Real.pi) / 2) = -1 := by
+    convert Real.cos_pi using 1 <;> ring
+  norm_num [axialSymbol, Real.cos_two_pi, hc]
+
+/--
+A real frequency in the 2π mode enforces a stricter necessary upper
+bound on the dimensionless coupling than the π mode.
+-/
+theorem spectral_budget_at_two_pi (ρ ω δ : ℝ)
+    (hdisp : 4 * Real.sin (ω * δ / 2) ^ 2 =
+      ρ * axialSymbol (2 * Real.pi)) :
+    ρ ≤ (1 / 64 : ℝ) := by
+  have hb : ρ * axialSymbol (2 * Real.pi) ≤ 4 := by
+    rw [← hdisp]
+    nlinarith [Real.sin_sq_le_one (ω * δ / 2)]
+  rw [axialSymbol_at_two_pi] at hb
+  nlinarith
+
+/--
+The Planck-ratio calibration ρ=1/15 is incompatible with a real
+frequency at 2π. This obstruction is stronger than the earlier π mode.
+-/
+theorem noRealPlanckAxialFrequency_two_pi (a ρ ω δ : ℝ) (ha : a ≠ 0)
+    (hMatch : 30 * a ^ 2 * ρ = 2 * a ^ 2) :
+    ¬ (4 * Real.sin (ω * δ / 2) ^ 2 =
+      ρ * axialSymbol (2 * Real.pi)) := by
+  intro hdisp
+  have hρ := spectral_budget_at_two_pi ρ ω δ hdisp
+  rw [forcedPlanckRatio a ρ ha hMatch] at hρ
+  norm_num at hρ
+
 end VOPM
