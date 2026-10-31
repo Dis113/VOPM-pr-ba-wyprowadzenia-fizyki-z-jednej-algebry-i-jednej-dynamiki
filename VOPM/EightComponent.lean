@@ -1,4 +1,4 @@
-import VOPM.E8Data
+import VOPM.E8Basis
 
 /-!
 # VOPM-004: eight complex amplitudes per vertex, with edge-local updates
@@ -122,12 +122,12 @@ edge from x to x + (the d-th published E8 root displacement).
 noncomputable def e8Event {n : ℕ}
     (C : VOPM.UnitaryWalk.LocalCoin) (d : Fin 240)
     (x : Site n) (a b : Fin 8) (ψ : State n) : State n :=
-  bondTick x (x + VOPM.E8Data.rootShift n d) a b (onsiteCoin C ψ)
+  bondTick x (x + VOPM.E8Basis.shift n d) a b (onsiteCoin C ψ)
 
 /-- The two involved sites are connected by a root-labelled directed edge. -/
 theorem event_edge {n : ℕ} (d : Fin 240) (x : Site n) :
-    VOPM.UnitaryWalk.DirectedNeighbor (VOPM.E8Data.rootShift n)
-      x (x + VOPM.E8Data.rootShift n d) := by
+    VOPM.UnitaryWalk.DirectedNeighbor (VOPM.E8Basis.shift n)
+      x (x + VOPM.E8Basis.shift n d) := by
   exact ⟨d, rfl⟩
 
 /--
@@ -144,8 +144,8 @@ theorem e8Event_pairing {n : ℕ}
   unfold e8Event
   calc
     pairing
-        (bondTick x (x + VOPM.E8Data.rootShift n d) a b (onsiteCoin C ψ))
-        (bondTick x (x + VOPM.E8Data.rootShift n d) a b (onsiteCoin C φ))
+        (bondTick x (x + VOPM.E8Basis.shift n d) a b (onsiteCoin C ψ))
+        (bondTick x (x + VOPM.E8Basis.shift n d) a b (onsiteCoin C φ))
         = pairing (onsiteCoin C ψ) (onsiteCoin C φ) := by
             exact bondTick_pairing x _ a b (onsiteCoin C ψ) (onsiteCoin C φ)
     _ = pairing ψ φ := onsiteCoin_pairing C hC ψ φ
@@ -159,10 +159,10 @@ theorem e8Event_offbond {n : ℕ}
     (x : Site n) (a b : Fin 8) (ψ : State n)
     (i : Index n)
     (h₁ : i ≠ (x, a))
-    (h₂ : i ≠ (x + VOPM.E8Data.rootShift n d, b)) :
+    (h₂ : i ≠ (x + VOPM.E8Basis.shift n d, b)) :
     e8Event C d x a b ψ i = C (fun k => ψ (i.1, k)) i.2 := by
   unfold e8Event
-  rw [bondTick_off x (x + VOPM.E8Data.rootShift n d)
+  rw [bondTick_off x (x + VOPM.E8Basis.shift n d)
     a b (onsiteCoin C ψ) i h₁ h₂]
   rfl
 
