@@ -105,6 +105,19 @@ theorem interactionTick_bornMass {n : ℕ} (x y : Site n)
     simp [algebraicPhase, h]
 
 /--
+A model-specific limitation: this *diagonal* associator coupling cannot
+move probability between computational-basis configurations. A unitary
+phase-only interaction can entangle superpositions, but by itself it
+cannot generate hopping or state transport in this preferred basis.
+-/
+theorem interactionTick_basis_probability {n : ℕ}
+    (x y : Site n) (ψ : Wave n) (q : Configuration n) :
+    Complex.normSq (interactionTick x y ψ q) =
+      Complex.normSq (ψ q) := by
+  by_cases h : jointEnergy (q x) (q y) = 16 <;>
+    simp [interactionTick, algebraicPhase, h]
+
+/--
 Strict locality: the update phase depends only on the two endpoints
 and their local eight-dimensional basis labels.
 -/
