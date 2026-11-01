@@ -5,3 +5,4 @@ import VOPM.E8Data
 import VOPM.E8Basis
 import VOPM.EightComponent
 import VOPM.ManyBody
+import VOPM.E8ManyBody
