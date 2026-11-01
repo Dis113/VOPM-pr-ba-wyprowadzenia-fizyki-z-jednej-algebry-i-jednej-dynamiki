@@ -87,21 +87,27 @@ theorem coin_pairing (c s : ℂ)
   have hform :
       pairing (coin c s u) (coin c s v) =
         (c * c + s * s) * pairing u v := by
-    simp only [pairing, coin, leftE1, star_add, star_mul, star_neg, hc, hs]
+    simp [pairing, coin, leftE1, star_add, star_mul, hc, hs]
     ring
   rw [hform, hunit, one_mul]
 
-/-- The standard cosine/sine family of octonionic local coins is unitary. -/
-theorem angular_coin_pairing (θ : ℝ) (u v : Vec) :
-    pairing (coin (Real.cos θ) (Real.sin θ) u)
-      (coin (Real.cos θ) (Real.sin θ) v) =
-    pairing u v := by
+/-- A real pair on the unit circle defines an octonionic isometry. -/
+theorem real_coin_pairing (c s : ℝ)
+    (hunit : c * c + s * s = 1) (u v : Vec) :
+    pairing (coin (c : ℂ) (s : ℂ) u)
+      (coin (c : ℂ) (s : ℂ) v) = pairing u v := by
   apply coin_pairing
   · simp
   · simp
-  · have h : Real.cos θ ^ 2 + Real.sin θ ^ 2 = 1 :=
-      Real.cos_sq_add_sin_sq θ
-    exact_mod_cast h
+  · exact_mod_cast hunit
+
+/-- The cosine/sine family is unitary for every real angle. -/
+theorem angular_coin_pairing (θ : ℝ) (u v : Vec) :
+    pairing (coin (Real.cos θ : ℂ) (Real.sin θ : ℂ) u)
+      (coin (Real.cos θ : ℂ) (Real.sin θ : ℂ) v) =
+      pairing u v := by
+  apply real_coin_pairing (Real.cos θ) (Real.sin θ)
+  nlinarith [Real.cos_sq_add_sin_sq θ]
 
 /-- Unlike a pure direction relabelling, the coin has a mixing component. -/
 theorem coin_zero_entry (c s : ℂ) (v : Vec) :
