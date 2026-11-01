@@ -144,6 +144,14 @@ theorem e8Interaction_bornMass {n : ℕ} (p : VOPM.E8ManyBody.Event n)
     bornMass (e8Interaction p ψ) = bornMass ψ := by
   exact interactionTick_bornMass p.1 (p.1 + VOPM.E8Basis.shift n p.2) ψ
 
+/-- One E8 interaction preserves the probability of each basis configuration. -/
+theorem e8Interaction_basis_probability {n : ℕ}
+    (p : VOPM.E8ManyBody.Event n) (ψ : Wave n)
+    (q : Configuration n) :
+    Complex.normSq (e8Interaction p ψ q) = Complex.normSq (ψ q) := by
+  exact interactionTick_basis_probability p.1
+    (p.1 + VOPM.E8Basis.shift n p.2) ψ q
+
 /-- A finite ordered causal schedule of nonassociative-energy interactions. -/
 def evolve {n : ℕ} :
     List (VOPM.E8ManyBody.Event n) → Wave n → Wave n
@@ -161,5 +169,37 @@ theorem evolve_pairing {n : ℕ}
           (evolve ps (e8Interaction p φ)) = pairing ψ φ
       exact (ih (e8Interaction p ψ) (e8Interaction p φ)).trans
         (e8Interaction_pairing p ψ φ)
+
+/--
+Important no-go for this phase-only ansatz: an arbitrary finite schedule
+cannot redistribute basis-state probabilities. New off-diagonal hopping
+dynamics is required for any propagation of excitations in this basis.
+-/
+theorem evolve_basis_probability {n : ℕ}
+    (ps : List (VOPM.E8ManyBody.Event n)) (ψ : Wave n)
+    (q : Configuration n) :
+    Complex.normSq (evolve ps ψ q) = Complex.normSq (ψ q) := by
+  induction ps generalizing ψ with
+  | nil => rfl
+  | cons p ps ih =>
+      change Complex.normSq (evolve ps (e8Interaction p ψ) q) =
+        Complex.normSq (ψ q)
+      exact (ih (e8Interaction p ψ)).trans
+        (e8Interaction_basis_probability p ψ q)
+
+/-- A diagonal observable is a real function of the full basis configuration. -/
+noncomputable def diagonalExpectation {n : ℕ}
+    (f : Configuration n → ℝ) (ψ : Wave n) : ℝ :=
+  ∑ q : Configuration n, f q * Complex.normSq (ψ q)
+
+/-- Every diagonal observable is constant under the current phase-only dynamics. -/
+theorem evolve_diagonalExpectation {n : ℕ}
+    (ps : List (VOPM.E8ManyBody.Event n))
+    (f : Configuration n → ℝ) (ψ : Wave n) :
+    diagonalExpectation f (evolve ps ψ) = diagonalExpectation f ψ := by
+  unfold diagonalExpectation
+  apply Finset.sum_congr rfl
+  intro q hq
+  rw [evolve_basis_probability]
 
 end VOPM.AssociatorManyBody
