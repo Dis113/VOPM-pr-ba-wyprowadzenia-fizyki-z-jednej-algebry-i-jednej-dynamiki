@@ -38,3 +38,6 @@ jobs:
 
       - name: Validate E8 primitive coordinates
         run: python3 checks/check_e8_basis.py
+
+      - name: Validate octonionic generator table
+        run: python3 checks/check_octonion_coin.py
