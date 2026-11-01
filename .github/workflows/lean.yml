@@ -41,3 +41,6 @@ jobs:
 
       - name: Validate octonionic generator table
         run: python3 checks/check_octonion_coin.py
+
+      - name: Validate associator Hamiltonian independently
+        run: python3 checks/check_associator.py
