@@ -6,6 +6,8 @@ usual Cayley–Dickson sign convention for O = H ⊕ H ℓ and that its sample
 real-coefficient coin is orthogonal (hence complex-unitary).
 """
 from fractions import Fraction
+from pathlib import Path
+import re
 
 
 def qmul(a, b):
@@ -62,8 +64,19 @@ def check():
     expected = [[0 for _ in range(8)] for _ in range(8)]
     for i, j, s in sign_pairs:
         expected[i][j] = s
-    assert J == expected, "Cayley-Dickson table / Lean sign mismatch"
-
+    assert J == expected, "Cayley-Dickson table / expected sign mismatch"
+    source = (Path(__file__).resolve().parents[1] /
+              "VOPM" / "OctonionicCoin.lean").read_text(encoding="utf-8")
+    parsed = re.search(
+        r"def leftE1 \(v : Vec\) : Vec :=\s*!\[([^\]]+)\]", source
+    )
+    assert parsed, "missing explicit Lean leftE1 vector expression"
+    tokens = [t.strip() for t in parsed.group(1).split(",")]
+    assert tokens == [
+        "-v 1", "v 0", "-v 3", "v 2",
+        "-v 5", "v 4", "v 7", "-v 6",
+    ], "the actual Lean leftE1 table differs from Cayley-Dickson"
+    
     I = [[int(i == j) for j in range(8)] for i in range(8)]
     assert transpose(J) == [[-x for x in row] for row in J]
     assert mmul(J, J) == [[-x for x in row] for row in I]
