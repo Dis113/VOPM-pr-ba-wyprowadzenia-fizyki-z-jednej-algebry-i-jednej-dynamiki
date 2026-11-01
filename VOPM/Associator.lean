@@ -79,7 +79,6 @@ theorem hamiltonian_eq_neg_square (v : Vec) :
   funext a
   rw [defect_square]
   simp [hamiltonian, Pi.neg_apply]
-  ring
 
 /--
 The nonassociative defect is skew-adjoint for the standard positive
@@ -100,7 +99,8 @@ theorem defect_adjoint_square (u v : Vec) :
   rw [defect_skew]
   rw [hamiltonian_eq_neg_square]
   simp [pairing]
-  
+  ring
+
 /-- Positive scalar expectation of H expressed using known norm squares. -/
 noncomputable def energy (v : Vec) : ℝ :=
   4 * (Complex.normSq (v 4) + Complex.normSq (v 5) +
@@ -109,6 +109,10 @@ noncomputable def energy (v : Vec) : ℝ :=
 /-- H cannot produce negative expectation energy. -/
 theorem energy_nonneg (v : Vec) : 0 ≤ energy v := by
   unfold energy
-  positivity
+  have h4 := Complex.normSq_nonneg (v 4)
+  have h5 := Complex.normSq_nonneg (v 5)
+  have h6 := Complex.normSq_nonneg (v 6)
+  have h7 := Complex.normSq_nonneg (v 7)
+  nlinarith
 
 end VOPM.Associator
