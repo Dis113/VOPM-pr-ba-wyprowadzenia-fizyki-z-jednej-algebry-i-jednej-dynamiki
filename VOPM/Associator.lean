@@ -115,4 +115,13 @@ theorem energy_nonneg (v : Vec) : 0 ≤ energy v := by
   have h7 := Complex.normSq_nonneg (v 7)
   nlinarith
 
+/--
+The real nonnegative scalar energy is precisely the complex expectation
+of the Hamiltonian: no separately postulated positivity functional.
+-/
+theorem hamiltonian_expectation (v : Vec) :
+    pairing v (hamiltonian v) = (energy v : ℂ) := by
+  simp [pairing, hamiltonian, internalProjection, energy,
+    Complex.normSq_eq_conj_mul_self, Complex.star_def] <;> ring
+
 end VOPM.Associator
