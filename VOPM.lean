@@ -12,3 +12,5 @@ import VOPM.AssociatorManyBody
 import VOPM.OctavianBridge
 import VOPM.OctavianProduct
 import VOPM.OctavianHolonomy
+import VOPM.G2TraceAudit
+import VOPM.LocalGaugeObstruction
