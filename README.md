@@ -6,6 +6,28 @@
 > lub wartości stałych z jednej mikrodynamiki.
 >
 > 
+**VOPM-013 — sprawdzanie nietrywialnych połączeń z literaturą:**
+
+- `VOPM/OctavianHolonomy.lean`: dla `k(ji)=1` kompozycja
+  lewych operatorów nie jest jednością:
+  `L_k L_j L_i = I - H_assoc/2` — ta sama projekcja
+  występuje jako energia asocjatora i odbicie transportu;
+- `checks/check_octavian_holonomy.py`: dokładne, poprawnie odwracane
+  transporty po **13 440 zamkniętych trójkątach E₈**, rozkład
+  śladów operatorowych i test zmiany izometrycznej identyfikacji
+  korzeni z jednostkami oktonionów;
+- siedem lewych generatorów urojonych spełnia relacje
+  `Cl(0,7)`, lecz pełne osiem niezależnych hermitowskich
+  generatorów wymaga większej przestrzeni spinorowej;
+- [VOPM-013: holonomia algebraiczna, trójkąty E₈,
+  Clifford i ograniczenia](docs/VOPM-013_holonomy_clifford.md).
+
+**Ostrożność:** poprawne ślady typu Wilsona nie są jeszcze
+obserwablami cechowania, dopóki nie określimy prawa transformacji
+lokalnych ram. Matematyka pętli Moufanga i Clifforda jest znana
+z prac Grigoriana (2021), Feingolda i in. (2009),
+Kleinschmidta i in. (2012) oraz Krasnova (2024).
+
 **VOPM-012 — jawny most E₈–oktoniony (wynik konstrukcyjny):**
 - `VOPM/OctavianBridge.lean` zawiera osiem oktonionowych pierwiastków
   prostych, mapę na 240 elementów i dowód zgodności ich macierzy Grama;
