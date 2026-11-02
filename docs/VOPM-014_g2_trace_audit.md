@@ -280,3 +280,69 @@ byłoby błędem. Zamiast tego potrzebujemy:
   \(\mathrm{Cl}(0,7)\);
 - Mechanizmu 3+1 i kontroli fizycznej chiralności
   bez dopasowywania obserwowanych stałych.
+
+
+---
+
+## 7. Nietrywialny most do geometrii spinorowej: Spin(7) → G₂
+
+**Nowe i bezpośrednie źródło recenzowane:**
+Crowley, Goette i Nordström (2025),
+*An analytic invariant of G₂ manifolds*, Inventiones
+mathematicae 239, 865–907,
+DOI 10.1007/s00222-024-01310-z, §5,
+podaje znaną relację (zależnie od konwencji znaku)
+
+\[
+\varphi(x,y,z)=\pm\langle c_xc_yc_z s,s\rangle,
+\]
+
+gdzie \`s\` jest jednostkowym rzeczywistym spinorem
+\`Spin(7)\` w ośmiowymiarowej przestrzeni rzeczywistej,
+a jego stabilizatorem jest \`G₂\`. W ten sposób
+wybór **spinora referencyjnego**, a nie zwykły
+operatorowy ślad, wybiera trójformę \`G₂\`
+spośród struktur o tej samej metryce.
+
+W naszej **ściśle ustalonej** konwencji bazy Cayleya–Dicksona
+oraz dla jednostkowego spinora \`s=1\` i
+\`x,y,z∈Im O\`:
+
+\[
+\boxed{
+\varphi(x,y,z)=\langle1,L_zL_yL_x1\rangle,
+\qquad
+\operatorname{tr}(L_zL_yL_x)=0.
+}
+\]
+
+Jest to **klasyczna geometria spinorów**, a VOPM-014
+sprawdza znak i tożsamość dla **wszystkich
+\`7³=343\` trójek jednostek urojonych**, z których
+42 mają niezerową trójformę (7 linii Fano × 6
+uporządkowań). Pozostałe dają zero.
+
+Wcześniejszy model VOPM-013 znał już
+\`L_{e_i}\` jako reprezentację \`Cl(0,7)\`.
+Teraz można ściśle wyjaśnić, **dlaczego**
+\`Tr(L_zL_yL_x)\` traci informację, a
+\`⟨s,L_zL_yL_x s⟩\` ją odzyskuje.
+To połączenie twierdzeń znanych i zweryfikowanych
+koordynatowo, a nie nowe prawo fizyczne.
+
+### Obowiązkowy problem fizyczny
+
+Jeśli VOPM miałby traktować \`s=1\` jako
+stan próżni, byłoby to **dodatkowym wyborem
+spinora/porządku**, redukującym symetrię
+referencyjną do \`G₂\`. Musimy wykazać, że
+to wyróżnienie wynika z **tej samej
+dynamiki**, np. jako stabilny stan podstawowy,
+a nie jest dopisywane arbitralnie.
+
+Przy niezależnych transformacjach ram
+\`s_x \mapsto g_x s_x\` należy też
+odpowiednio transportować spinory i operatory.
+Na razie nasz dowód dotyczy wspólnej
+globalnej ramy. Nie deklarujemy
+prawdziwej lokalnej symetrii cechowania.
