@@ -79,7 +79,7 @@ def triangle_traces(roots, links):
             # Each matrix T is TWICE the corresponding 8x8 unitary U.
             # normalized trace = trace(T_c T_b T_a) / (8 * 8).
             t = trace_triple(links[k], links[j], links[i])
-            assert t in (-32, 0, 32), (i, j, k, t)
+            assert t in (-64, -32, 0, 32, 64), (i, j, k, t)
             hist[t] += 1
             sample.setdefault(t, (i, j, k))
             oriented += 1
@@ -102,7 +102,7 @@ def triple_word_check():
 
     # Existing VOPM-010 H_assoc=diag(0^4,4^4).
     # Here the closed left-translation word is exactly I-H_assoc/2.
-    H2 = [[0 if i < 4 else (8 if i == j else 0)
+    H2 = [[0 if i < 4 else (16 if i == j else 0)
            for j in range(8)] for i in range(8)]
     assert word8 == [[8*I[i][j] - H2[i][j] for j in range(8)]
                      for i in range(8)]
@@ -161,7 +161,7 @@ def main():
 
     # Control: L_1 at every directed edge has trivial closed-loop trace.
     I2 = [[2 if i == j else 0 for j in range(8)] for i in range(8)]
-    control, _ = triangle_traces_control(roots, I2)
+    control, _ = triangle_traces(roots, [I2 for _ in roots])
     assert control == Counter({64: 13440})
     print("CONTROL: identical unit transport on all edges gives W=+1 throughout")
     print("NOTE: Wilson-type TRACE is a candidate diagnostic of ONE fixed-frame")
@@ -171,14 +171,6 @@ def main():
     print("NOTE: known Clifford/loop identities are reused, not new theorems.")
     print("NO CLAIM: observed 3+1 spacetime, TEGR, fermions, or quantum gravity.")
 
-
-def triangle_traces_control(roots, I2):
-    idx = {r: i for i, r in enumerate(roots)}
-    count = sum(
-        tuple(-x - y for x, y in zip(a, b)) in idx
-        for a in roots for b in roots
-    )
-    return Counter({64: count}), {64: (0, 0, 0)}
 
 
 if __name__ == "__main__":
