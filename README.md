@@ -17,6 +17,16 @@
   **ich ślady są całkowicie określone przez dane metryczne Clifforda**,
   bez potrzeby trójformy (G₂). Dla każdego trójkąta
   `φ(Im Φ(α),Im Φ(β),Im Φ(γ))=0`, ponieważ `α+β+γ=0`;
+- `VOPM/LocalGaugeObstruction.lean`: **formalne ograniczenie
+  lokalnego G₂**. Niebanalny automorfizm `Q∈G₂` nie może być
+  utożsamiony z lewym mnożeniem `L_u` dla żadnego oktonionu;
+  niezależne zmiany ram na końcach krawędzi wyprowadzają
+  operator poza dotychczasową rodzinę `{L_u}` —
+  to ograniczenie **obecnego ansatzu**, nie całych teorii G₂;
+- **spinorowy punkt odniesienia:** 343 kombinacje bazowych
+  jednostek sprawdzają znaną relację między trójformą
+  `G₂` a elementem macierzowym `⟨s,L_zL_yL_x s⟩`;
+  zwykły ślad pozostaje zerowy (Crowley–Goette–Nordström 2025);
 - istnieje nieautomorficzna izometria całego zbioru jednostek,
   która zachowuje **wszystkie** wcześniejsze ślady trójkątów —
   poprzedni test z VOPM-013 był zbyt słaby do wykazania
