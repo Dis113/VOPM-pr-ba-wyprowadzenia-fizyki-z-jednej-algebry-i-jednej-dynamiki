@@ -295,3 +295,24 @@ lake build
 Skrypt dokładny czyta dane istniejących plików Lean;
 każdy podany histogram musi być aktualizowany
 wraz ze zmianą \(\Phi\) i konwencji kierunków.
+
+
+## VI. Kontrola dodatnia: automorfizm oktonionów G₂
+
+W przeciwieństwie do izometrycznego odbicia Weyla, znany niebanalny
+automorfizm Cayleya–Dicksona `g(a,b)=(a,-b)` dla `O=H ⊕ Hℓ`
+zachowuje mnożenie. Na ośmiu współrzędnych odpowiada mu
+`Q=diag(1,1,1,1,-1,-1,-1,-1)`, więc `L_{g(u)}=Q L_u Q⁻¹`.
+
+Dokładny test potwierdza `g(uv)=g(u)g(v)` dla **57 600** par
+jednostek integralnych oraz identyczność śladu dla **każdego
+z 13 440** trójkątów E₈ po przejściu do nowej mapy `g∘Φ`.
+Nie chodzi tylko o zgodność histogramów; porównywane są
+odpowiadające sobie zorientowane trójkąty.
+
+To wzmacnia rygor interpretacji poprzedniego wyniku:
+obserwowany brak zgodności dla `r₁∘Φ` nie wynika
+z arbitralnej zmiany współrzędnych przez automorfizm `G₂`,
+lecz z użycia izometrii, która **nie zachowuje iloczynu**.
+Nie jest to jeszcze dowód fizycznego łamania symetrii;
+lokalne prawo cechowania pozostaje do wyprowadzenia.
