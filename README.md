@@ -8,6 +8,7 @@
 > **Nowe uzupełnienie literaturowo-testowe:**
 > [VOPM-011 — literatura, kontrolne kraty i symetryzacja G₂](docs/VOPM-011_literature_benchmarks.md),
 > [pełna bibliografia BibTeX](docs/references.bib),
+> [kandydat transportu przez jednostki oktonionowe E₈](docs/VOPM-012_octavian_link_proposal.md),
 > [odtwarzalny skrypt](checks/literature_benchmarks.py).
 >
 > **Weryfikacja bez dublowania klasycznych twierdzeń:**
