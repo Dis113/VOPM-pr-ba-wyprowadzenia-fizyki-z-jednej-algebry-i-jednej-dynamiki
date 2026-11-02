@@ -70,7 +70,6 @@ theorem translationWord_involution (v : Vec) :
 theorem translationWord_pairing (u v : Vec) :
     pairing (translationWord u) (translationWord v) = pairing u v := by
   simp [pairing, translationWord, leftE1, leftE2, leftE3]
-  ring
 
 /-- A unit vector in the complementary (non-quaternionic) subspace. -/
 def ell : Vec :=
