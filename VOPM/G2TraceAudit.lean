@@ -77,7 +77,8 @@ three-edge prefix. In the chosen octavian convention its G2 form
 is -4/8 = -1/2.
 -/
 theorem fourStepPrefix_form_nonzero : threeForm sampleA sampleB sampleC = -4 := by
-  norm_num [threeForm, imag, mul, sampleA, sampleB, sampleC]
+  norm_num [threeForm, Fin.sum_univ_succ, imag, mul,
+    sampleA, sampleB, sampleC]
 
 /--
 The non-G2 imaginary-axis reflection reverses the same G2-sensitive
@@ -86,7 +87,7 @@ three-form. This controls the *specific* left-multiplication convention.
 theorem fourStepPrefix_form_changes :
     threeForm (flipImagOne sampleA) (flipImagOne sampleB)
       (flipImagOne sampleC) = 4 := by
-  norm_num [threeForm, flipImagOne, imag, mul,
+  norm_num [threeForm, Fin.sum_univ_succ, flipImagOne, imag, mul,
     sampleA, sampleB, sampleC]
 
 end VOPM.G2TraceAudit
