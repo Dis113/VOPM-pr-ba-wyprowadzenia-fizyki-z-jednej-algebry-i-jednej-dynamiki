@@ -345,3 +345,60 @@ This benchmark is **not another physics discovery**; it
 prevents existing nonassociative gauge and octonionic
 connection theory from being mistakenly re-presented
 as original consequences of VOPM.
+
+
+## 10. Exact no-go for the proposed 64x64 gate: 240 labels collapse to 120
+
+Because left multiplication is linear, \`L_{-u}=-L_u\`.
+For every unit octavian \`u\`,
+
+\`\`\`math
+W_{-u}=(L_{-u}\otimes L_{\overline{-u}})\,SWAP
+      =(-L_u\otimes -L_{\bar u})\,SWAP=W_u.
+\`\`\`
+
+Since the phase gate \`V\` is independent of \`u\`,
+
+\`\`\`math
+\boxed{G_{xy,-u}=G_{xy,u}}.
+\`\`\`
+
+The exact integer 64x64 regression checks **all 240 labels**.
+There are exactly **120 different matrices**, each
+appearing with multiplicity two (corresponding to \`u\`
+and \`-u\`). This is a **specific, falsifiable no-go for
+the present ansatz**: the 240 *oriented* root labels
+are not fully reflected in the local operator.
+
+The effect is unrelated to an experimental mass:
+it is an exact consequence of how two signs cancel
+in the tensor-product transport rule. To recover
+orientation-dependent propagation (and eventually
+test any chiral dynamics), the microscopic update
+must include a nontrivial oriented-link structure.
+Changing the root-label naming cannot repair it.
+
+There is also an exact operator identity:
+
+\`\`\`math
+G_u= V\,SWAP\,(L_{\bar u}\otimes L_u).
+\`\`\`
+
+Consequently, for **one isolated edge**, every \`G_u\`
+is equivalent to the SAME familiar \`V SWAP\` gate
+up to input local unitary rotations. The octavian
+label changes the local basis, not the two-site
+entangling resource of a single gate. Distinct labels
+could still matter for sequences of overlapping
+edges, but that must be established by a separate
+spectrum, holonomy, or invariant.
+
+**Publication criterion:** a defensible claim of novel
+octavian dynamics must exhibit a graph-level observable
+that distinguishes it from a standard circuit of
+local rotations + controlled phase + SWAP, with a
+non-arbitrary and symmetry-consistent schedule.
+
+This corrects any earlier suggestion that 240
+algebraic edge labels automatically mean 240
+physically inequivalent elementary interactions.
