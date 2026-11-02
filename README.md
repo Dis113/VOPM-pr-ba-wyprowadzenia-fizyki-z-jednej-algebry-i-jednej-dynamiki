@@ -5,7 +5,26 @@
 > wyprowadzenie grawitacji, pól cechowania, generacji fermionów, wymiaru 3+1
 > lub wartości stałych z jednej mikrodynamiki.
 >
-> **Nowe uzupełnienie literaturowo-testowe:**
+> 
+**VOPM-012 — jawny most E₈–oktoniony (wynik konstrukcyjny):**
+- `VOPM/OctavianBridge.lean` zawiera osiem oktonionowych pierwiastków
+  prostych, mapę na 240 elementów i dowód zgodności ich macierzy Grama;
+- `VOPM/OctavianProduct.lean` formalizuje konwencję Cayleya–Dicksona
+  i jawny kontrprzykład: odbicie Weyla E₈ nie musi zachowywać iloczynu;
+- `checks/check_octavian_bridge.py` kontroluje dokładnie 240 jednostek,
+  57 600 produktów oraz 57 600 par iloczynów skalarnych;
+- `checks/check_octavian_gate.py` sprawdza trzy konkretne macierze 64×64
+  dwuwęzłowej bramki transportującej i splątującej.
+
+Podstawa literaturowa: Conway–Smith, *On Quaternions and Octonions*,
+Koca–Özdes (1989), Dray–Manogue, *Geometry of the Octonions*.
+**To nie są nowo odkryte własności algebry.** Wybrana mapa jest
+niekanoniczna, a sprzężenie fazowe i harmonogram są postulatami.
+Dynamika 3+1, fermiony, grawitacja, cechowanie i stałe fizyczne
+pozostają niewyprowadzone. Pełny zakres:
+[certyfikat i ograniczenia VOPM-012](docs/VOPM-012_octavian_link_proposal.md).
+
+**Nowe uzupełnienie literaturowo-testowe:**
 > [VOPM-011 — literatura, kontrolne kraty i symetryzacja G₂](docs/VOPM-011_literature_benchmarks.md),
 > [pełna bibliografia BibTeX](docs/references.bib),
 > [kandydat transportu przez jednostki oktonionowe E₈](docs/VOPM-012_octavian_link_proposal.md),

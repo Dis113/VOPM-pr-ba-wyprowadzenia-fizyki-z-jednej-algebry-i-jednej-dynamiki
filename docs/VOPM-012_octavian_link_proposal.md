@@ -1,6 +1,6 @@
 # VOPM-012 — proposed octavian-labelled edge gate: one algebra linked to one lattice
 
-**Status: technical proposal, NOT yet implemented or verified in Lean.**  
+**Status (VOPM-012): E8-to-octavian bridge IMPLEMENTED and independently verified; simple-root Gram certificate added to Lean. The proposed 64x64 interacting transport gate is tested as a prototype in exact arithmetic, but has NOT been formally proved for all 240 labels in Lean nor adopted as the uniquely derived microscopic law.**  
 **Primary precedent:** M. Koca, N. Özdes, *Division Algebras with Integral Elements*,
 J. Phys. A **22** (1989), 1469–1493, DOI:
 https://doi.org/10.1088/0305-4470/22/10/006.
@@ -169,3 +169,236 @@ The **research question** is whether this specific
 octavian-labelled, interacting finite quantum circuit
 has a physically meaningful low-energy sector that
 cannot be reproduced on simpler control graphs.
+
+
+---
+
+## 7. Implementation progress: exact certificate for 240 edge labels
+
+Files in PR #16:
+
+- \`VOPM/OctavianBridge.lean\` defines eight octavian simple-root
+  vectors, the map \`octavianRootDoubled(d)\` from the already published
+  primitive E8 root coordinates, and a kernel-checked **8x8 Gram
+  compatibility certificate**, subject to successful CI.
+- \`checks/check_octavian_bridge.py\` reads both actual Lean basis
+  tables and uses **exact integers** (no numerical tolerance).
+  It certifies a bijection between **all 240** E8 roots and **all 240**
+  units of a specific maximal octavian order, norm one, inverse
+  and conjugation, **all 57,600 pairwise inner products**,
+  **all 57,600 octavian products**, and the isometry condition
+  \`(2 L_u)^T(2 L_u)=4I\` for all 240 labels.
+- \`checks/check_octavian_gate.py\` constructs the actual **64x64**
+  two-site candidate matrix with exact integer numerators.
+  It verifies full unitarity for three representative unit types:
+  \`u=1\`, \`u=i\`, and one four-entry half-octavian unit.
+  A half-real unit maps a basis product state to 16 nonzero
+  computational-basis amplitudes; after the controlled phase, an
+  explicit 2x2 amplitude minor is nonzero, proving entanglement
+  for that **chosen** input.
+
+### The concrete order and literature
+
+In the Cayley–Dickson basis \`(1,i,j,k,l,il,jl,kl)\`, take:
+
+- 16 single-axis units \`±e_a\`, for \`a=0,...,7\`;
+- 224 half-unit vectors with four nonzero entries \`±1/2\`.
+  Their supports are 14 quadruples (14 tetrads, each allowing
+  16 independent signs). These fourteen supports are the
+  \`ell-integer\` maximal order described in the *Geometry
+  of the Octonions* (Dray–Manogue) and in the Conway–Smith
+  discussion of Cayley integers.
+
+**Critical distinction from the literature:** the naive
+\`Kirmse integers\` may share the E8 lattice geometry,
+but the naive coordinate realization is **not closed under
+octonion multiplication** ("Kirmse's mistake"). We have
+deliberately selected the multiplicatively closed **Cayley/
+ell-integer order**, and the complete 240x240 integer
+product test checks exactly this issue.
+
+These are *classical results*, not VOPM discoveries:
+- [Conway–Smith book and Baez's BAMS review](https://math.ucr.edu/home/baez/octonions/conway_smith/index.html)
+- [Dray–Manogue, Geometry of the Octonions](https://sites.science.oregonstate.edu/physics/coursewikis/GO/book/go/oint.html)
+- [Koca–Özdes, J. Phys. A (1989)](https://doi.org/10.1088/0305-4470/22/10/006).
+
+### Important symmetry obstruction, demonstrated explicitly
+
+A Weyl reflection in the real unit root maps
+\`1 -> -1\` but leaves the imaginary unit \`i\` fixed.
+Therefore:
+
+\`\`\`math
+r_1(1\cdot i)=i,\qquad
+r_1(1)\cdot r_1(i)=(-1)\cdot i=-i.
+\`\`\`
+
+The reflection preserves the root *set* and Euclidean
+metric but NOT octonionic multiplication. Thus:
+
+\`\`\`math
+W(E_8)\not\subset \mathrm{Aut}(\mathbb O).
+\`\`\`
+
+**Consequences:** E8 Weyl invariance of a graph does not
+automatically transfer to a law based on edge octavian
+multiplication. The microscopic operator may select
+an arithmetic subgroup compatible with the chosen
+octavian order. This must be a test, not a hidden assumption.
+
+The reverse root has unit \`u_{-α}=-u_α\`, which is
+**generally not** the multiplicative inverse
+\`\bar u_α\`. A future orientation-independent hopping
+Hamiltonian must define adjoints using conjugation
+rather than silently equating them to negative-root labels.
+
+### 64x64 model and its current scientific scope
+
+The tested gate is the **hypothesis**
+
+\`\`\`math
+G_{xy,u}=(I-2P_{\mathrm{im}}^{(x)}\otimes
+P_{\mathrm{im}}^{(y)})
+\left(L_u^{(x)}\otimes L_{\bar u}^{(y)}\right)
+\mathrm{SWAP}_{xy}.
+\`\`\`
+
+The two factors are individually unitary; only the
+controlled phase is entangling on appropriate inputs.
+This separates:
+- known octonionic norm identities;
+- a chosen lattice-to-octavian isometry;
+- the **extra dynamical postulate** of controlled phase
+  and ordering.
+
+There is still **no** derivation of Dirac/Maxwell
+propagation, chiral fermions, 3+1 dimensions,
+tetrads or experimental dimensionless constants.
+The 240 edge labels remain a discrete choice,
+not local E8 or continuous G2 gauge bosons.
+
+## 8. Publication criteria for the bridge
+
+A peer-reviewed mathematical-physics methods paper
+would require, at minimum:
+1. A rigorous **kernel-checked or published general**
+   proof of the 240-unit operator isometries, in
+   addition to the independent exhaustive integer
+   regression.
+2. A deterministic circuit scheduling rule and its
+   causal cone on periodic E8 root graphs. For
+   \`n=0\` the single-site torus identifies endpoints;
+   claims of "two distinct sites" require a separate
+   nondegeneracy condition.
+3. A comparison against graph controls with the
+   **same local 8-level system**, to establish a
+   consequence specific to the octavian labelling.
+4. A spectral prediction that cannot be reproduced
+   by a standard SWAP+controlled-phase circuit.
+
+
+## 9. More direct peer-reviewed comparisons for a gauge/geometry claim
+
+**Octonionic gauge theory already exists** in other frameworks.
+E. K. Loginov, *On a class of gauge theories*, J. Math. Phys.
+48 (2007), 073522 (DOI 10.1063/1.2749173), studies gauge
+structures associated with nonassociative Moufang loops.
+
+S. Grigorian, *G₂-structures and octonion bundles*, Advances in
+Mathematics 308 (2017), 142–207 (DOI
+10.1016/j.aim.2016.12.003), gives an octonionic covariant
+derivative, relates torsion to an octonionic connection, and
+studies an octonionic Dirac operator. These are MUCH stronger
+mathematical geometric claims than presently justified by
+our discrete 64×64 gate. Do not call an arbitrary product
+of left multipliers a physical gauge connection.
+
+The comparison framework is therefore now explicit:
+
+- Define a consistent **local change-of-frame law** for each
+  octavian-labelled edge transport operator and decide
+  which group/loop actually acts as gauge redundancy.
+- Check the compatibility (or obstruction) of that law with
+  the associative composition of linear operators and the
+  nonassociative multiplication of unit octavians. In general
+  \`L_u L_v != L_(uv)\`; the difference is an associator,
+  so naive group-valued Wilson-loop formulas cannot
+  simply be transplanted.
+- Obtain a gauge-covariant plaquette/closed-loop quantity,
+  with carefully fixed bracketing and orientation. Only
+  then ask whether a continuum Yang–Mills or torsion
+  limit is possible.
+- Distinguish the **discrete arithmetic automorphism**
+  group of the selected integral-octavian order
+  (see Koca–Koç–Koca 2007, DOI
+  10.1016/j.laa.2006.12.011) from the full continuous
+  Lie group G₂=Aut(O).
+- Meet QCA locality and homogeneity benchmarks from
+  P. Arrighi, *An overview of quantum cellular automata*
+  (Natural Computing 18, 2019, DOI
+  10.1007/s11047-019-09762-6).
+  An externally selected arbitrary event list is **not**
+  a derivation of an intrinsic clock or a translationally
+  invariant one-step automaton.
+
+This benchmark is **not another physics discovery**; it
+prevents existing nonassociative gauge and octonionic
+connection theory from being mistakenly re-presented
+as original consequences of VOPM.
+
+
+## 10. Exact no-go for the proposed 64x64 gate: 240 labels collapse to 120
+
+Because left multiplication is linear, \`L_{-u}=-L_u\`.
+For every unit octavian \`u\`,
+
+\`\`\`math
+W_{-u}=(L_{-u}\otimes L_{\overline{-u}})\,SWAP
+      =(-L_u\otimes -L_{\bar u})\,SWAP=W_u.
+\`\`\`
+
+Since the phase gate \`V\` is independent of \`u\`,
+
+\`\`\`math
+\boxed{G_{xy,-u}=G_{xy,u}}.
+\`\`\`
+
+The exact integer 64x64 regression checks **all 240 labels**.
+There are exactly **120 different matrices**, each
+appearing with multiplicity two (corresponding to \`u\`
+and \`-u\`). This is a **specific, falsifiable no-go for
+the present ansatz**: the 240 *oriented* root labels
+are not fully reflected in the local operator.
+
+The effect is unrelated to an experimental mass:
+it is an exact consequence of how two signs cancel
+in the tensor-product transport rule. To recover
+orientation-dependent propagation (and eventually
+test any chiral dynamics), the microscopic update
+must include a nontrivial oriented-link structure.
+Changing the root-label naming cannot repair it.
+
+There is also an exact operator identity:
+
+\`\`\`math
+G_u= V\,SWAP\,(L_{\bar u}\otimes L_u).
+\`\`\`
+
+Consequently, for **one isolated edge**, every \`G_u\`
+is equivalent to the SAME familiar \`V SWAP\` gate
+up to input local unitary rotations. The octavian
+label changes the local basis, not the two-site
+entangling resource of a single gate. Distinct labels
+could still matter for sequences of overlapping
+edges, but that must be established by a separate
+spectrum, holonomy, or invariant.
+
+**Publication criterion:** a defensible claim of novel
+octavian dynamics must exhibit a graph-level observable
+that distinguishes it from a standard circuit of
+local rotations + controlled phase + SWAP, with a
+non-arbitrary and symmetry-consistent schedule.
+
+This corrects any earlier suggestion that 240
+algebraic edge labels automatically mean 240
+physically inequivalent elementary interactions.

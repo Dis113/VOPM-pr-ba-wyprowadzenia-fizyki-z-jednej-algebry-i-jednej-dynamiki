@@ -47,3 +47,9 @@ jobs:
 
       - name: Published E8 design and G2 spectral controls
         run: python3 checks/literature_benchmarks.py
+
+      - name: Exact E8 to integral-octavian unit certificate
+        run: python3 checks/check_octavian_bridge.py
+
+      - name: Exact two-site octavian 64x64 gate test
+        run: python3 checks/check_octavian_gate.py
