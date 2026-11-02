@@ -25,6 +25,7 @@ kierunków fali. Ogólne twierdzenia o E₈ i G₂ pozostają wynikiem znanej li
 
 | Wynik istniejący | Czego uczy VOPM | Co jest nowością wyłącznie *naszego testu* |
 |---|---|---|
+| Koca–Özdes (1989), [Division Algebras with Integral Elements](https://doi.org/10.1088/0305-4470/22/10/006) | 240 pierwiastków E₈ można realizować przez integralne oktoniony: bezpośredni most między grafem a algebrą. | [VOPM-012](VOPM-012_octavian_link_proposal.md): propozycja operatora transportu z etykiety oktonionowej; wymaga jawnej mapy i dowodów. |
 | Baez (2002), [The Octonions](https://doi.org/10.1090/S0273-0979-01-00934-X) | Algebra alternatywna, G₂, Clifford, trialność. | Jawny audyt wybranych tabel i operatorów VOPM. |
 | Günaydin–Gürsey (1973), [Quark Structure and Octonions](https://doi.org/10.1063/1.1666240) | G₂/SU(3) i kwarki z oktonionów są starszymi pomysłami. | *Nie* zgłaszamy asocjatora jako wyprowadzenia kwarków. |
 | Furey (2018), [Three Generations...](https://doi.org/10.1016/j.physletb.2018.08.032); Furey–Hughes (2025), [Three Generations and a Trio of Trialities](https://doi.org/10.1016/j.physletb.2025.139473) | Analiza reprezentacji jest znacznie bardziej szczegółowa niż obecne 0+7 VOPM. | Test, czy obecny Hamiltonian w ogóle rozróżnia docelowe reprezentacje. |
