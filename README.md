@@ -1,5 +1,23 @@
 # VOPM — algebra, dynamika, dowody (Lean 4)
 
+> **Stan badań (2 listopada 2026):** formalnie zweryfikowane są wybrane konstrukcje
+> dyskretne, unitarność i Hamiltonian asocjatora; **nie** istnieje jeszcze
+> wyprowadzenie grawitacji, pól cechowania, generacji fermionów, wymiaru 3+1
+> lub wartości stałych z jednej mikrodynamiki.
+>
+> **Nowe uzupełnienie literaturowo-testowe:**
+> [VOPM-011 — literatura, kontrolne kraty i symetryzacja G₂](docs/VOPM-011_literature_benchmarks.md),
+> [pełna bibliografia BibTeX](docs/references.bib),
+> [kandydat transportu przez jednostki oktonionowe E₈](docs/VOPM-012_octavian_link_proposal.md),
+> [odtwarzalny skrypt](checks/literature_benchmarks.py).
+>
+> **Weryfikacja bez dublowania klasycznych twierdzeń:**
+> Bannai–Sloane (1981) gwarantuje 7-design pierwiastków E₈;
+> Baez (2002) opisuje klasyczną strukturę oktonionów i G₂;
+> literatura QCA i kwantowej graphity określa testy niezbędne dla
+> emergentnej fizyki. Nasze skrypty sprawdzają *instancje VOPM*,
+> nie twierdzą, że ponownie udowadniają te wyniki.
+
 Eksperymentalny program matematyczny badający dyskretną dynamikę związaną z geometrią E₈ i potencjalnie z algebrą zespolonych oktonionów.
 
 **Status: program badawczy, nie potwierdzona teoria fizyczna.** Kod sprawdza warunkowe twierdzenia dotyczące *konkretnego* wariantu dynamiki, a nie pełną unifikację.
@@ -65,7 +83,38 @@ Repozytorium przypina wersję Mathlib i odpowiadającą jej wersję Lean. GitHub
 
 ## Kolejny etap
 
-Zdefiniować i sprawdzić odmianę **unitarnej lokalnej ewolucji** dla skończonego grafu oraz związek jej widma z powyższym modelem drugiego rzędu. Dopiero potem badać odtwarzanie symetrii Lorentza i dynamicznych tetrad.
+Obecnie istnieją moduły formalizujące lokalną przestrzeń `ℂ⁸`,
+pełną przestrzeń wielu węzłów, operator oktonionowy,
+asocjator i unitarne bramki na prymitywnych krawędziach E₈.
+Nadal są to **prototypy**, a część sprzężeń jest postulowana.
+
+Kolejne priorytety to: **(1)** Hamiltonian z faktycznym transportem,
+**(2)** mechanizm redukcji do 3+1 wynikający z wyliczonej fazy,
+**(3)** widmo fermionowe/polaryzacje i **(4)** unikatowe przewidywanie
+bezwymiarowe. Testem zerowym jest prosty 8D Hamiltonian
+`H_null(k)=S_E8(k)/30·I₈+m·P_im`, którego widmo pozostaje 1+7,
+a propagacja nie jest ani Diracowska, ani 3+1.
+
+### Aktualne moduły
+
+- `VOPM/Dispersion.lean`: ograniczenia `ρ≤1/46` i `ρ≤1/64`
+  dla określonego centralnego kroku, nie twierdzenie obalające VOPM;
+- `VOPM/E8Basis.lean`: 240 pierwiastków w prymitywnej bazie E₈;
+- `VOPM/EightComponent.lean`, `VOPM/ManyBody.lean`:
+  osiem stanów zespolonych na węzeł oraz baza wielu węzłów;
+- `VOPM/E8ManyBody.lean`: lokalny, unitarny harmonogram bramek;
+- `VOPM/OctonionicCoin.lean`, `VOPM/Associator.lean`:
+  konkretny operator mnożenia i dodatni Hamiltonian niełączności;
+- `VOPM/AssociatorManyBody.lean`: dwuwęzłowa dynamika fazowa
+  i ścisła przeszkoda dla transportu amplitud w bazie obliczeniowej;
+- `checks/literature_benchmarks.py`: niezależna kontrola izotropii
+  E₈, porównanie z D₈ i Z⁸ oraz uśrednione 21 asocjatorów.
+
+**Nowy wynik kontrolny VOPM-011 (Python, nie Lean):**
+`∑_{1≤i<j≤7} A_ij†A_ij = 48(I−P_1)`.
+Stanowi to zachowanie bardziej symetryczne względem G₂, lecz samo
+nie dzieli siedmiu kierunków urojonych na generacje.
+
 
 ## Literatura / implementacje, zamiast ponownych dowodów
 
