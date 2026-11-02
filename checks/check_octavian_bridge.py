@@ -170,7 +170,22 @@ def main():
     print("PASS: E8-to-octavian simple Gram correspondence and 240-root bijection")
     print("PASS: all 57,600 pairwise root Gram relations (scale factor 2)")
     print("PASS: all 240 left-action matrices satisfy T^T T=4I; all inverses")
+    # A Weyl reflection in the real unit preserves this root set, but
+    # does not preserve Cayley-Dickson multiplication. Thus a full E8
+    # Weyl symmetry is NOT automatically an internal octonionic symmetry.
+    def reflect_in_real_unit(a):
+        return (-a[0],) + a[1:]
+    assert set(reflect_in_real_unit(a) for a in octav) == octav
+    a, b = e0, (0, 2, 0, 0, 0, 0, 0, 0)
+    def unit_product(u, v):
+        p4 = octmul(u, v)
+        assert all(z % 2 == 0 for z in p4)
+        return tuple(z//2 for z in p4)
+    assert reflect_in_real_unit(unit_product(a, b)) != unit_product(
+        reflect_in_real_unit(a), reflect_in_real_unit(b))
+
     print("PASS: inverse, conjugation, orientation reversal each checked")
+    print("PASS: explicit E8 Weyl reflection is NOT an octonion automorphism")
     print("LIMIT: isometry is a specific choice, not canonical; Weyl choices differ")
     print("LIMIT: U(-alpha)=-U(alpha), whereas conjugate(U(alpha)) need not equal -U(alpha)")
     print("LIMIT: exact 240-unit checks are regression code, not yet Lean kernel proofs")
