@@ -90,6 +90,19 @@ def check():
     assert sum(g[row][col] != 0 for row in range(1,64)) > 0
     print("PASS: half-real unit transports basis amplitudes to 16 outcomes")
     print(f"PASS: pure product input becomes entangled (2x2 minor numerator={minor})")
+    # Crucial sign/orientation no-go: u and -u contribute two
+    # minus signs in the tensor product, so G(-u) == G(u).
+    # The 240 oriented E8 roots yield only 120 distinct local gates.
+    signatures = {}
+    for unit in units:
+        gunit = integer_gate_four(unit)
+        signature = tuple(value for row in gunit for value in row)
+        signatures[signature] = signatures.get(signature, 0) + 1
+    assert len(signatures) == 120
+    assert set(signatures.values()) == {2}
+    print("PASS: 240 root labels collapse to 120 unique two-site gates")
+    print("NO-GO: current gate G(-u)=G(u); orientation is lost in one local event")
+    print("NO-GO: single-edge entangling part is local-unitary-equivalent to CZ*SWAP")
     print("LIMIT: this is one selected gate, not a fixed-graph QFT or QCA")
     print("LIMIT: V and the gate order are independent dynamical POSTULATES")
     print("LIMIT: no spectral prediction of 3+1, Maxwell, TEGR or Standard Model")
