@@ -9,3 +9,4 @@ import VOPM.E8ManyBody
 import VOPM.OctonionicCoin
 import VOPM.Associator
 import VOPM.AssociatorManyBody
+import VOPM.OctavianBridge
