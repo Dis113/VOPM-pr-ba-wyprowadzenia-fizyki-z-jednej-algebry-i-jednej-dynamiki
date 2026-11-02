@@ -69,6 +69,7 @@ def triangle_traces(roots, links):
     idx = {root: i for i, root in enumerate(roots)}
     hist = Counter()
     sample = {}
+    trace_by_triangle = {}
     oriented = 0
     for i, a in enumerate(roots):
         for j, b in enumerate(roots):
@@ -81,10 +82,11 @@ def triangle_traces(roots, links):
             t = trace_triple(links[k], links[j], links[i])
             assert t in (-64, -32, 0, 32, 64), (i, j, k, t)
             hist[t] += 1
+            trace_by_triangle[(i, j, k)] = t
             sample.setdefault(t, (i, j, k))
             oriented += 1
     assert oriented == 13440
-    return hist, sample
+    return hist, sample, trace_by_triangle
 
 
 def triple_word_check():
@@ -140,7 +142,7 @@ def main():
     assert len(set(oct_units)) == 240
 
     links = oriented_links(roots, oct_units)
-    hist, samples = triangle_traces(roots, links)
+    hist, samples, original_by_triangle = triangle_traces(roots, links)
     assert hist == Counter({0: 7632, -32: 3072, 32: 2736}), hist
     print("PASS: 13,440 directed E8 root triangles at each base vertex")
     print("PASS: normalized trace W=tr(Ugamma Ubeta Ualpha)/8:")
@@ -152,16 +154,41 @@ def main():
     # This reflection is NOT an automorphism of octonionic multiplication.
     reflected = [(-u[0],) + tuple(u[1:]) for u in oct_units]
     new_links = oriented_links(roots, reflected)
-    reflected_hist, _ = triangle_traces(roots, new_links)
+    reflected_hist, _, reflected_by_triangle = triangle_traces(roots, new_links)
     assert reflected_hist == Counter({0: 7632, -32: 2736, 32: 3072})
+    assert all(reflected_by_triangle[t] == -v for t,v in original_by_triangle.items())
     print("PASS: Weyl-isometric but nonmultiplicative re-labelling alters holonomies")
     print("  reflected W=0:", reflected_hist[0],
           "; W=-1/2:", reflected_hist[-32],
           "; W=+1/2:", reflected_hist[32])
 
+    # A nontrivial, genuine octonionic G2 automorphism:
+    # (a,b) -> (a,-b) in the Cayley-Dickson form H + H*ell.
+    # Unlike the real-unit Weyl reflection, it preserves multiplication.
+    def g2_involution(u):
+        return u[:4] + tuple(-a for a in u[4:])
+    from check_associator import octmul
+    for u in oct_units:
+        for v in oct_units:
+            assert g2_involution(octmul(u,v)) == octmul(g2_involution(u),g2_involution(v))
+    assert set(g2_involution(u) for u in oct_units) == set(oct_units)
+    # Since A is a real diagonal involution, L_{A(u)}=A L_u A^{-1}.
+    sign = (1,1,1,1,-1,-1,-1,-1)
+    g2_units = [g2_involution(u) for u in oct_units]
+    for u,au in zip(oct_units,g2_units):
+        T = left_doubled_matrix(u)
+        TA = left_doubled_matrix(au)
+        assert all(TA[i][j] == sign[i]*sign[j]*T[i][j]
+                   for i in range(8) for j in range(8))
+    g2_links = oriented_links(roots, g2_units)
+    g2_hist, _, g2_by_triangle = triangle_traces(roots, g2_links)
+    assert g2_hist == hist and g2_by_triangle == original_by_triangle
+    print("POSITIVE CONTROL: a genuine nontrivial G2 octonion automorphism")
+    print("  leaves EVERY E8 triangle operator trace unchanged.")
+
     # Control: L_1 at every directed edge has trivial closed-loop trace.
     I2 = [[2 if i == j else 0 for j in range(8)] for i in range(8)]
-    control, _ = triangle_traces(roots, [I2 for _ in roots])
+    control, _, _ = triangle_traces(roots, [I2 for _ in roots])
     assert control == Counter({64: 13440})
     print("CONTROL: identical unit transport on all edges gives W=+1 throughout")
     print("NOTE: Wilson-type TRACE is a candidate diagnostic of ONE fixed-frame")
