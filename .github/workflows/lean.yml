@@ -56,3 +56,6 @@ jobs:
 
       - name: Octavian holonomy and E8-triangle oriented Wilson diagnostics
         run: python3 checks/check_octavian_holonomy.py
+
+      - name: Clifford trace blindspot and G2 four-edge control
+        run: python3 checks/check_g2_trace_blindspot.py
