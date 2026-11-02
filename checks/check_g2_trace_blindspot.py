@@ -113,6 +113,18 @@ def check():
     assert flipped_imaginary_axis_one(octmul(e1, e2)) != octmul(
         flipped_imaginary_axis_one(e1), flipped_imaginary_axis_one(e2)
     )
+    # Independent local-frame G2 closure obstruction for the restricted
+    # link family U=L_u. The genuine automorphism Q=(+I4)oplus(-I4)
+    # fixes 1 but is NOT equal to L_u for ANY octonion (not merely 240
+    # integral units): Q(1)=1 forces u=1, contradicting Q(e4)=-e4.
+    # The Lean proof is VOPM/LocalGaugeObstruction.lean.
+    twoQ = [[2 * (1 if i < 4 else -1) if i == j else 0
+             for j in range(8)] for i in range(8)]
+    assert all(left_doubled_matrix(u) != twoQ for u in units)
+    assert g2_involution((2,0,0,0,0,0,0,0)) == (2,0,0,0,0,0,0,0)
+    assert g2_involution((0,0,0,0,2,0,0,0)) == (0,0,0,0,-2,0,0,0)
+    print("NO-GO: independently rotating G2 frames can take L_1 outside all L_u")
+
     print("PASS: imaginary-axis reflection preserves all 240 octavian roots")
     print("PASS: this reflection does NOT preserve octonionic multiplication (non-G2)")
 
