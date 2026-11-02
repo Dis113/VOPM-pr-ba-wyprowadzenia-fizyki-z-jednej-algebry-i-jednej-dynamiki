@@ -346,3 +346,107 @@ odpowiednio transportować spinory i operatory.
 Na razie nasz dowód dotyczy wspólnej
 globalnej ramy. Nie deklarujemy
 prawdziwej lokalnej symetrii cechowania.
+
+
+---
+
+## 8. Mocniejszy modelowo-specyficzny no-go: lokalne G₂ wymaga szerszej przestrzeni łączy
+
+**Praca źródłowa:** S. Grigorian (2017), *G₂-structures and
+octonion bundles*, Advances in Mathematics 308, 142–207,
+DOI: 10.1016/j.aim.2016.12.003,
+oraz Grigorian (2021), *Smooth loops and loop bundles*.
+
+Standardowe prawo zmiany lokalnej ramy dla
+macierzowego transportu ma formę
+
+\[
+U_{xy}\ \longmapsto\
+g_x U_{xy} g_y^{-1}.
+\]
+
+W VOPM-012 łącza mają ograniczoną postać
+\[
+U_{xy}=L_{u_{xy}},\qquad u_{xy}\in\mathcal U_{\rm oct}.
+\]
+
+Możemy wykazać **precyzyjną przeszkodę** dla
+pełnej, niezależnej lokalnej redundancji \(G₂\).
+
+Niech \(Q\in G₂\) będzie znanym, niebanalnym
+automorfizmem Cayleya–Dicksona
+
+\[
+Q(a,b)=(a,-b),\qquad
+\mathbb O=\mathbb H\oplus\mathbb H\ell.
+\]
+
+Jako macierz na ośmiu współrzędnych ma postać
+\(Q=\operatorname{diag}(1,1,1,1,-1,-1,-1,-1)\).
+
+Dla początkowego transportu jednostkowego
+\(U_{xy}=L_1=I\) i **niezależnych**
+ram \(g_x=Q\), \(g_y=I\) otrzymujemy
+
+\[
+U'_{xy}=Q.
+\]
+
+Gdyby \(Q=L_u\) dla jakiegokolwiek
+oktonionu \(u\), z działania na rzeczywistą
+jednostkę otrzymalibyśmy:
+
+\[
+u=L_u(1)=Q(1)=1.
+\]
+
+Wówczas \(L_u=L_1=I\), ale
+\(Q(\ell)=-\ell\), co daje sprzeczność.
+Zatem
+
+\[
+\boxed{Q\ne L_u\quad\text{dla każdego }u\in\mathbb O}.
+\tag{5}
+\]
+
+Co istotne, (5) jest mocniejsze niż stwierdzenie,
+że \(Q\) nie należy do **240** łączy integralnych:
+nie istnieje taki **żaden** oktonion.
+
+Dodałem do \`VOPM/LocalGaugeObstruction.lean\`:
+- certyfikat zgodności automorfizmu \(Q(ab)=Q(a)Q(b)\);
+- jawne \(Q^2=I\), \(Q(1)=1\);
+- dokładne prawo \(L_u(1)=u\);
+- dowód **niezamknięcia** całej rodziny \(\{L_u\}\)
+  względem niezależnych lokalnych zmian ram.
+
+Skrypt \`checks/check_g2_trace_blindspot.py\`
+niezależnie potwierdza, że żadna z 240
+obecnych macierzy octavianowych nie jest \(Q\).
+
+### Konsekwencja recenzencka
+
+Nie można zarazem zakładać:
+1. wyłącznie jednooparametrowych łączy
+   \(U_{xy}=L_{u_{xy}}\),
+2. *dowolnych niezależnych* lokalnych transformacji
+   ram z całej grupy \(G₂\),
+3. standardowego prawa cechowania
+   \(U'_{xy}=g_xU_{xy}g_y^{-1}\),
+
+**bez zwiększenia przestrzeni dopuszczalnych
+operatorów łączy lub ograniczenia przekształceń**.
+
+To **nie** wyklucza modelu z globalnym \(G₂\),
+rozszerzonego zbioru macierzy transportu,
+lub spójnej nieasocjacyjnej teorii wiązek
+w duchu Grigoriana. Oznacza tylko, że
+prototyp VOPM-012 nie posiada tej lokalnej
+redundancji automatycznie.
+
+**Priorytet:** określić, czy lokalne ramy mają
+być formalną redundancją, czy realnymi
+stopniami swobody. Następnie zdefiniować
+powiązanie ram, działanie i jego testy,
+nie utożsamiając automorfizmów \(G₂\)
+z samą pętlą 240 jednostek całkowitych.
