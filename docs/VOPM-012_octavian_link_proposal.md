@@ -295,3 +295,53 @@ would require, at minimum:
    consequence specific to the octavian labelling.
 4. A spectral prediction that cannot be reproduced
    by a standard SWAP+controlled-phase circuit.
+
+
+## 9. More direct peer-reviewed comparisons for a gauge/geometry claim
+
+**Octonionic gauge theory already exists** in other frameworks.
+E. K. Loginov, *On a class of gauge theories*, J. Math. Phys.
+48 (2007), 073522 (DOI 10.1063/1.2749173), studies gauge
+structures associated with nonassociative Moufang loops.
+
+S. Grigorian, *G₂-structures and octonion bundles*, Advances in
+Mathematics 308 (2017), 142–207 (DOI
+10.1016/j.aim.2016.12.003), gives an octonionic covariant
+derivative, relates torsion to an octonionic connection, and
+studies an octonionic Dirac operator. These are MUCH stronger
+mathematical geometric claims than presently justified by
+our discrete 64×64 gate. Do not call an arbitrary product
+of left multipliers a physical gauge connection.
+
+The comparison framework is therefore now explicit:
+
+- Define a consistent **local change-of-frame law** for each
+  octavian-labelled edge transport operator and decide
+  which group/loop actually acts as gauge redundancy.
+- Check the compatibility (or obstruction) of that law with
+  the associative composition of linear operators and the
+  nonassociative multiplication of unit octavians. In general
+  \`L_u L_v != L_(uv)\`; the difference is an associator,
+  so naive group-valued Wilson-loop formulas cannot
+  simply be transplanted.
+- Obtain a gauge-covariant plaquette/closed-loop quantity,
+  with carefully fixed bracketing and orientation. Only
+  then ask whether a continuum Yang–Mills or torsion
+  limit is possible.
+- Distinguish the **discrete arithmetic automorphism**
+  group of the selected integral-octavian order
+  (see Koca–Koç–Koca 2007, DOI
+  10.1016/j.laa.2006.12.011) from the full continuous
+  Lie group G₂=Aut(O).
+- Meet QCA locality and homogeneity benchmarks from
+  P. Arrighi, *An overview of quantum cellular automata*
+  (Natural Computing 18, 2019, DOI
+  10.1007/s11047-019-09762-6).
+  An externally selected arbitrary event list is **not**
+  a derivation of an intrinsic clock or a translationally
+  invariant one-step automaton.
+
+This benchmark is **not another physics discovery**; it
+prevents existing nonassociative gauge and octonionic
+connection theory from being mistakenly re-presented
+as original consequences of VOPM.
