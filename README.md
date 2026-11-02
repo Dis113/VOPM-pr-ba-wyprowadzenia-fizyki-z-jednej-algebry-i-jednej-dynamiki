@@ -6,6 +6,32 @@
 > lub wartości stałych z jednej mikrodynamiki.
 >
 > 
+**VOPM-014 — istotna korekta interpretacji holonomii (Clifford + G₂):**
+
+- [audyt literaturowy i ścisłe ograniczenia](docs/VOPM-014_g2_trace_audit.md);
+- `VOPM/G2TraceAudit.lean`: kontrprzykład dla nieautomorficznego
+  odbicia urojonego oraz jawny **czterokrawędziowy** świadek
+  trójformy (G₂);
+- `checks/check_g2_trace_blindspot.py`: niezależna dokładna
+  weryfikacja wszystkich 13 440 trójkątów:
+  **ich ślady są całkowicie określone przez dane metryczne Clifforda**,
+  bez potrzeby trójformy (G₂). Dla każdego trójkąta
+  `φ(Im Φ(α),Im Φ(β),Im Φ(γ))=0`, ponieważ `α+β+γ=0`;
+- istnieje nieautomorficzna izometria całego zbioru jednostek,
+  która zachowuje **wszystkie** wcześniejsze ślady trójkątów —
+  poprzedni test z VOPM-013 był zbyt słaby do wykazania
+  szczególnego znaczenia symetrii (G₂);
+- prawdziwy **czterokrawędziowy** cykl `(0,1,6,7)` ma
+  trójformę na niezależnym prefiksie `φ=-1/2`;
+  po tej nieautomorficznej izometrii `φ=+1/2`.
+  **Nie** jest to jeszcze obserwabla niezmiennicza względem
+  niezależnych lokalnych transformacji cechowania.
+
+To zastosowania znanych faktów o kalibracjach (G₂), Cliffordzie
+i stratach informacji po śladowaniu holonomii
+(Baez 2002; Harvey–Lawson 1982; Bryant 1987;
+Faraji 2026), **nie nowy ogólny dowód tych twierdzeń**.
+
 **VOPM-013 — sprawdzanie nietrywialnych połączeń z literaturą:**
 
 - `VOPM/OctavianHolonomy.lean`: dla `k(ji)=1` kompozycja
