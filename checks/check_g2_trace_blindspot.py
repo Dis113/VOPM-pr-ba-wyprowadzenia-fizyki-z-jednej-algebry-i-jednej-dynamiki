@@ -151,6 +151,33 @@ def check():
         assert g2_threeform_numerator(units[i], units[j], units[k]) == 0
 
     assert hist == Counter({0: 7632, -32: 3072, 32: 2736}), hist
+    # Published spinorial construction of G2: the ASSOCIATIVE three-form
+    # is a unit-spinor matrix element, NOT an ordinary matrix trace.
+    # Check all 7^3=343 triples of pure imaginary basis units.
+    imaginary_basis = [
+        tuple(2 * int(j == i) for j in range(8)) for i in range(1, 8)
+    ]
+    imag_matrix = [left_doubled_matrix(u) for u in imaginary_basis]
+    count_phi_nonzero = 0
+    for a in range(7):
+        for b in range(7):
+            for c in range(7):
+                numerator = g2_threeform_numerator(
+                    imaginary_basis[a], imaginary_basis[b], imaginary_basis[c]
+                )
+                amp = open_triple_identity_component(
+                    imag_matrix[c], imag_matrix[b], imag_matrix[a]
+                )
+                tr = trace_triple(imag_matrix[c],imag_matrix[b],imag_matrix[a])
+                assert tr == 0
+                assert amp == numerator, (a,b,c,amp,numerator)
+                assert numerator in (-8, 0, 8)
+                if numerator != 0:
+                    count_phi_nonzero += 1
+    assert count_phi_nonzero == 42
+    print("PASS: 343 pure imaginary triples: unit-SPINOR bilinear is G2 3-form")
+    print("PASS: all 343 corresponding ordinary matrix TRACES vanish")
+
     print("PASS: all 13,440 old Wilson-type triangle traces are Clifford/Gram data")
     print("PASS: every triangle G2 three-form value is ZERO")
     print("PASS: non-G2 imaginary-axis reflection preserves EVERY triangle trace")
