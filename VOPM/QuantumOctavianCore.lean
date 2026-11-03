@@ -80,14 +80,16 @@ The positive quadratic form of the octavian-core quantum walk:
 <psi,K psi> = (1/2) sum_{u~v} |psi(u)-psi(v)|².
 This is the usual graph Laplacian (already known mathematics).
 -/
-noncomputable def coreEnergy (ψ : CoreWave) : ℝ :=
-  (1 / 2 : ℝ) *
+noncomputable def coreEnergy (ψ : CoreWave) : ℝ := by
+  classical
+  exact (1 / 2 : ℝ) *
     ∑ u : Fin 240, ∑ v : Fin 240,
       if orthogonal u v
       then Complex.normSq (ψ u - ψ v) else 0
 
 theorem coreEnergy_nonneg (ψ : CoreWave) :
     0 ≤ coreEnergy ψ := by
+  classical
   unfold coreEnergy
   apply mul_nonneg (by norm_num)
   apply Finset.sum_nonneg
@@ -100,6 +102,7 @@ theorem coreEnergy_nonneg (ψ : CoreWave) :
 
 theorem coreEnergy_uniform (z : ℂ) :
     coreEnergy (uniformCore z) = 0 := by
+  classical
   simp [coreEnergy, uniformCore]
 
 end VOPM.QuantumOctavianCore
