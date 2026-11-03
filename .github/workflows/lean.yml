@@ -10,6 +10,11 @@ on:
 permissions:
   contents: read
 
+# Cancel obsolete PR builds when a newer commit is pushed.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   proofs:
     runs-on: ubuntu-latest
@@ -29,6 +34,10 @@ jobs:
           # Independent leanchecker segfaults (exit 139) on pinned mathlib/Lean RC.
           # Compilation is still kernel-checked by Lean; investigate separately.
           leanchecker: "false"
+          # CI disk-space failure in actions/cache/save after a SUCCESSFUL
+          # Lean build. Disable .lake GitHub caching; mathlib's separate
+          # upstream precompiled artifact cache remains available.
+          use-github-cache: "false"
       - name: Reject placeholder proofs
         run: |
           if grep -RInE '\b(sorry|admit|axiom)\b' VOPM VOPM.lean; then
