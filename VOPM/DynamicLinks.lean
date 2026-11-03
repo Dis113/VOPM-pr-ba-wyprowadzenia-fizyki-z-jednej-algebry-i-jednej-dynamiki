@@ -127,6 +127,32 @@ theorem gauss_commute (ψ : FullWave) :
   rw [flips_commute]
   ring
 
+/--
+Two HALF-LINKS meeting at the SAME vertex form a local star.
+Unlike LinkBits for opposite ends of a single edge, BOTH bits here
+are transformed by the local vertex Gauss generator simultaneously.
+-/
+def starGaugeFlip (b : LinkBits) : LinkBits := (!b.1, !b.2)
+
+/-- Gauge-invariant relative frame parity for a two-edge star. -/
+def relativeParity (b : LinkBits) : ℤ :=
+  if b.1 = b.2 then 1 else -1
+
+theorem relativeParity_gauge_invariant (b : LinkBits) :
+    relativeParity (starGaugeFlip b) = relativeParity b := by
+  cases b with
+  | mk l r => cases l <;> cases r <;> decide
+
+/--
+Flipping ONE half-link changes the relative parity. Thus the electric
+term really acts on a GAUGE-INVARIANT observable at a vertex with two
+incident edges, not only on pure gauge bit labels.
+-/
+theorem relativeParity_electric_nontrivial (b : LinkBits) :
+    relativeParity (flipLeft b) = -relativeParity b := by
+  cases b with
+  | mk l r => cases l <;> cases r <;> decide
+
 /-- Unnormalized vacuum ray: scalar-octonionic matter and uniform link bits. -/
 def ground : FullWave :=
   fun z => if z.1 = (0, 0) then 1 else 0
