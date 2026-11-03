@@ -191,19 +191,6 @@ theorem symmetricBondEnergy_orientation
   simp [symmetricBondEnergy, linkAdjoint_involution,
     swapPair_involution, add_comm]
 
-theorem swapPair_vacuum : swapPair vacuumPair = vacuumPair := by
-  funext p
-  cases p with
-  | mk a b =>
-      by_cases ha : a = 0 <;>
-        by_cases hb : b = 0 <;>
-          simp [swapPair, vacuumPair, ha, hb]
-
-theorem symmetricBondEnergy_vacuum
-    (T : Fin 8 → Fin 8 → ℂ) :
-    symmetricBondEnergy T vacuumPair = 0 := by
-  simp [symmetricBondEnergy, bondEnergy_vacuum, swapPair_vacuum]
-
 /-- A single autonomous local Hamiltonian via its quadratic form. -/
 noncomputable def totalEnergy (T : Fin 8 → Fin 8 → ℂ)
     (ψ : PairWave) : ℝ :=
@@ -245,6 +232,19 @@ theorem bondEnergy_vacuum (T : Fin 8 → Fin 8 → ℂ) :
       rw [hleft, hsum]
       ring
     simp [hz, hdiff]
+
+theorem swapPair_vacuum : swapPair vacuumPair = vacuumPair := by
+  funext p
+  cases p with
+  | mk a b =>
+      change (if (b, a) = (0, 0) then (1 : ℂ) else 0) =
+        (if (a, b) = (0, 0) then (1 : ℂ) else 0)
+      simp [Prod.mk.injEq, and_comm]
+
+theorem symmetricBondEnergy_vacuum
+    (T : Fin 8 → Fin 8 → ℂ) :
+    symmetricBondEnergy T vacuumPair = 0 := by
+  simp [symmetricBondEnergy, bondEnergy_vacuum, swapPair_vacuum]
 
 theorem totalEnergy_vacuum (T : Fin 8 → Fin 8 → ℂ) :
     totalEnergy T vacuumPair = 0 := by
