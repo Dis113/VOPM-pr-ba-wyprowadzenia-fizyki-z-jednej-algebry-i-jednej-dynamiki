@@ -381,6 +381,14 @@ Daje to trzy klasy octavianowych krawędzi:
 | \(1/2\) | 112 | \(48.25,\;50.25\) |
 | \(1\) | 2 | \(48,\;52\) |
 
+**Liczności w tabeli dotyczą 240 skierowanych
+etykiet pierwiastków.** W nieskierowanej
+sieci odpowiadają im odpowiednio
+**63, 56 i 1** pary przeciwnych korzeni.
+Fizyczny odwrócony transporter określa się
+przez adjungowanie, nie przez automatyczne
+podstawienie \(u_{-\alpha}=-u_\alpha\).
+
 W każdej klasie jest dodatkowo
 sześć poziomów 48, sześć 52,
 49 poziomów 96 w sektorze
