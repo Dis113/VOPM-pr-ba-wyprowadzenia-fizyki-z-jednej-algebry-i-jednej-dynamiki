@@ -145,6 +145,10 @@ theorem bondEnergy_nonneg (T : Fin 8 → Fin 8 → ℂ)
   intro a ha
   split_ifs <;> nlinarith [Complex.normSq_nonneg (bondDifference T ψ a)]
 
+/-- The two-site product spinor |1,1> (both scalar coordinates). -/
+def vacuumPair : PairWave :=
+  fun p => if p = (0, 0) then 1 else 0
+
 /-- Reverse an oriented link via its adjoint, not the negative-root label. -/
 def linkAdjoint (T : Fin 8 → Fin 8 → ℂ) : Fin 8 → Fin 8 → ℂ :=
   fun a b => star (T b a)
@@ -209,10 +213,6 @@ theorem totalEnergy_nonneg (T : Fin 8 → Fin 8 → ℂ)
     (ψ : PairWave) : 0 ≤ totalEnergy T ψ := by
   unfold totalEnergy
   exact add_nonneg (pairOnsiteEnergy_nonneg ψ) (symmetricBondEnergy_nonneg T ψ)
-
-/-- The two-site product spinor |1,1> (both scalar coordinates). -/
-def vacuumPair : PairWave :=
-  fun p => if p = (0, 0) then 1 else 0
 
 theorem pairOnsiteEnergy_vacuum : pairOnsiteEnergy vacuumPair = 0 := by
   unfold pairOnsiteEnergy
