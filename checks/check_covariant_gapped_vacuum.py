@@ -192,6 +192,45 @@ def check():
         print(f"PASS: h for {name} is 64x64 Hermitian, gapped, and hops",
               f"({len(nonzero_hops)} nonzero amplitudes)")
 
+    # A model-specific EXACT single-bond spectral fingerprint. For a
+    # real-octonion unit u, the 7x7 compression M=P_im L_u P_im of
+    # an orthogonal 8x8 matrix has singular values 1 (six times)
+    # and |Re(u)| (once). This is a CLASSICAL matrix-compression
+    # result, not a newly discovered theorem of the octonions.
+    # Since B=[I,-M], 7 nonzero bond energies are 1+sigma(M)^2.
+    # The 14 one-excitation energies of h are therefore
+    #     48 (7 times), 50 (6 times), 49+Re(u)^2 (once).
+    # For u=+/-1 all 7 upper values coincide at 50.
+    # For doubled octavian coordinates u2, Re(u)^2=u2[0]^2/4.
+    scalar_classes = {0: 0, 1: 0, 4: 0}
+    def matmul7(A,B):
+        return [[sum(A[i][k]*B[k][j] for k in range(7))
+                 for j in range(7)] for i in range(7)]
+    for u in units:
+        u2 = u[0]
+        a2 = u2*u2
+        assert a2 in scalar_classes
+        scalar_classes[a2] += 1
+        T=dressed_double_unit(u,False,False)
+        M2=[[T[a][b] for b in range(1,8)] for a in range(1,8)]
+        K4=[[sum(M2[k][i]*M2[k][j] for k in range(7))
+             for j in range(7)] for i in range(7)]
+        assert sum(K4[i][i] for i in range(7)) == 24+a2
+        diff4=[[K4[i][j]-(4 if i==j else 0) for j in range(7)]
+               for i in range(7)]
+        diffa=[[K4[i][j]-(a2 if i==j else 0) for j in range(7)]
+               for i in range(7)]
+        assert matmul7(diff4,diffa) == [[0]*7 for _ in range(7)]
+        for i in range(7):
+            assert K4[i][i] >= 0
+    assert scalar_classes == {0:126, 1:112, 4:2}
+    print("PASS: ALL 240 compressed imaginary octavian links have exact spectrum")
+    print("  Re(u)^2=0:", scalar_classes[0], "links; upper band at 49")
+    print("  Re(u)^2=1/4:", scalar_classes[1], "links; upper band at 49.25")
+    print("  Re(u)^2=1:", scalar_classes[4], "links; upper band at 50")
+    print("  All have 7 exact modes at 48, six at 50, and one at 49+Re(u)^2")
+    print("  Note: this is a model-specific spectral PREDICTION, not an observed mass.")
+
     # The exact ground spinor is |0> at every vertex, not some chosen
     # tensor unrelated to the published 21-associator Hamiltonian.
     # The local matrix 48 P_im has precisely one zero mode.
