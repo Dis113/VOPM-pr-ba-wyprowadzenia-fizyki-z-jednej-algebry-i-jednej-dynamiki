@@ -62,3 +62,9 @@ jobs:
 
       - name: Gauge-covariant positive hopping and unique vacuum
         run: python3 checks/check_covariant_gapped_vacuum.py
+
+      - name: Quantized Z2 octavian link Gauss covariance and parent gap
+        run: python3 checks/check_dynamic_links.py
+
+      - name: Magnetic octavian E8 plaquette and exact physical spectrum
+        run: python3 checks/check_dynamic_plaquette.py
