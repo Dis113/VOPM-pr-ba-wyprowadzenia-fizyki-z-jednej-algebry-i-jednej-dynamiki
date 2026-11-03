@@ -16,3 +16,5 @@ import VOPM.G2TraceAudit
 import VOPM.LocalGaugeObstruction
 import VOPM.GappedVacuum
 import VOPM.ClosedFrames
+import VOPM.DynamicLinks
+import VOPM.QuantumOctavianCore
