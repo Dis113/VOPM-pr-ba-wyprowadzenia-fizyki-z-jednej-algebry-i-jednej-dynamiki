@@ -123,7 +123,6 @@ def h4_full(blocks, gamma):
 def full_gauss_check(unit):
     h=h4_full(h4_blocks(unit),gamma=1)
     for i in range(256):
-        assert h[i][0]==h[0][i]==0 if False else True
         for j in range(256):
             assert h[i][j]==h[j][i]
             for left in (True,False):
