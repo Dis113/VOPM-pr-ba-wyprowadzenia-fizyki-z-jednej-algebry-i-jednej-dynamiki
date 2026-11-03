@@ -130,6 +130,13 @@ Poza podgrupą \(\mathbb Z_2\) domknięcie
 (3)–(4) jest zwykłą własnością grupowego
 działania i opiera się na znanej matematyce.
 
+
+**Doprecyzowanie orientacji:** każdy człon nieskierowanej krawędzi
+zawiera teraz obie dodatnie formy
+`B_xy†B_xy+B_yx†B_yx`, z odwrotnym transportem
+`T_yx=T_xy†`. Dzięki temu Hamiltonian
+nie zależy od dowolnego wyboru zwrotu krawędzi.
+
 ## 3. Jedna reguła Hamiltonianowa: dodatni transport wzbudzeń
 
 Niech \(x\ne y\) będą sąsiednimi węzłami
@@ -168,7 +175,7 @@ nie pobiera amplitud, więc jest zerowy.
 H_V=
 48\sum_{x\in V}P_x+
 \sum_{\{x,y\}\in E(E₈)}
-B_{xy}^{\dagger}B_{xy}.
+\bigl(B_{xy}^{\dagger}B_{xy}+B_{yx}^{\dagger}B_{yx}\bigr).
 }
 \tag{6}
 \]
@@ -194,7 +201,7 @@ Dla dowolnego \(\Psi\) i skończonego \(V\):
 \[
 \langle\Psi,H_V\Psi\rangle
 =48\sum_x\langle\Psi,P_x\Psi\rangle
-+\sum_{xy}\|B_{xy}\Psi\|^2\ge0.
++\sum_{\{x,y\}}\bigl(\|B_{xy}\Psi\|^2+\|B_{yx}\Psi\|^2\bigr)\ge0.
 \tag{7}
 \]
 
@@ -254,8 +261,8 @@ między bazowymi stanami
 \[
 \boxed{
 \langle a,0|
-B_{xy}^\dagger B_{xy}
-|0,b\rangle = -(M_{xy})_{ab}.
+\bigl(B_{xy}^\dagger B_{xy}+B_{yx}^\dagger B_{yx}\bigr)
+|0,b\rangle = -2(M_{xy})_{ab}.
 }
 \tag{9}
 \]
@@ -299,97 +306,122 @@ dodatnie certyfikaty. Nie jest to
 nowy dowód abstrakcyjnej kowariancji
 dla każdej macierzy rzeczywistego \(G₂\).
 
-## 5a. Dokładne, zależne od etykiety widmo jednego łącza
+## 5a. Zwrot krawędzi i dokładne widmo jednego łącza
 
-W modelu VOPM-015 dyskretny kierunek \(\alpha\) etykietuje
-oktonion jednostkowy \(u_\alpha\). W przeciwieństwie do samej
-bramki SWAP+CZ z VOPM-012, **jedno-linkowe widmo
-wzbudzeń może zależeć od etykiety oktonionowej**.
+**Korekta przed scaleniem:** ponieważ \(M=P L_uP\)
+może być nieunitarny, sam \(B_{xy}^\dagger B_{xy}\)
+zależy od wyboru orientacji nieskierowanej krawędzi.
+Aby nie wprowadzać ukrytego arbitralnego
+kierunku, definiujemy zawsze
 
-Dla skrótu \(M=P L_u P\) oznaczmy przez \(M_7\)
-jego macierz na siedmiu kierunkach urojonych.
-Ponieważ \(L_u\) jest macierzą ortogonalną 8×8
-oraz \(L_u(1)=u\), znane twierdzenia o kompresji
-izometrii (rozłożenie CS) dają wartości
-singularne \(M_7\) równe
+\[
+\boxed{
+h_{\{x,y\}}=
+B_{xy}^\dagger B_{xy}+B_{yx}^\dagger B_{yx},
+\qquad M_{yx}=M_{xy}^\dagger.
+}
+\tag{10}
+\]
+
+Wymiana \(x\leftrightarrow y\)
+zamienia jedynie dwa składniki sumy.
+W Lean:
+\`linkAdjoint_involution\`,
+\`swapPair_involution\` i
+\`symmetricBondEnergy_orientation\`.
+Każdy z dwóch składników jest dodatni
+i anihiluje \(|1,1\rangle\),
+zatem globalny dowód (8) pozostaje prawdziwy.
+
+Dla oktonionu jednostkowego \(u\) macierz
+\(M_7=P L_uP|_{\operatorname{Im}}\) jest
+kompresją ortogonalnej macierzy 8×8.
+Znana teoria rozkładu *cosine–sine* macierzy
+blokowych daje singularne wartości
 
 \[
 1,1,1,1,1,1,\ |\operatorname{Re}u|.
 \]
 
-Stąd na sektorze jednego wzbudzenia
-dwuwęzłowego układu
-\[
-H_{1\mathrm{ex}}=48 I_{14}+B^\dagger B,
-\quad B=(I_7,-M_7),
-\]
-więc
+Przy \(B_+=(I_7,-M_7)\)
+oraz \(B_-=(-M_7^\dagger,I_7)\)
+dwuwęzłowy Hamiltonian w sektorze jednego
+wzbudzenia ma **dokładne widmo**
 
 \[
 \boxed{
-\operatorname{spec}(H_{1\mathrm{ex}})
-=\underbrace{\{48,\ldots,48\}}_{7}
-\cup\underbrace{\{50,\ldots,50\}}_{6}
-\cup\{49+(\operatorname{Re}u)^2\}.
+\operatorname{spec}(H_{1\mathrm{ex}})=
+\{48[\times6],\,52[\times6],\,
+48+(1-|\operatorname{Re}u|)^2,\,
+48+(1+|\operatorname{Re}u|)^2\}.
 }
-\tag{10}
+\tag{11}
 \]
 
-Przy \(\operatorname{Re}u=\pm1\) ostatni
-poziom zlewa się z innymi poziomami 50.
+Gdy \(u=\pm1\), dwa wyróżnione poziomy
+zlewają się odpowiednio z 48 i 52.
 
-**Weryfikacja konkretnego VOPM:** skrypt
-\`checks/check_covariant_gapped_vacuum.py\`
-czyta **wszystkie 240 jednostek**,
-dla każdej tworzy dokładną całkowitą
-macierz \(K_4=(2M_7)^\top(2M_7)\) i sprawdza
-wielomian:
+Skrypt \`checks/check_covariant_gapped_vacuum.py\`
+dla **wszystkich 240 jednostek** sprawdza
+dokładną całkowitą macierz
+\(K_4=(2M_7)^\top(2M_7)\)
+oraz relacje
 
 \[
-\bigl(K_4-4I\bigr)\,
-\bigl(K_4-(2\operatorname{Re}u)^2I\bigr)=0
+(K_4-4I)(K_4-(2\operatorname{Re}u)^2I)=0,
+\qquad
+\operatorname{tr}(K_4)=24+(2\operatorname{Re}u)^2.
 \]
 
-oraz \(\mathrm{tr}(K_4)=24+(2\operatorname{Re}u)^2\).
-Testy prowadzą do **trzech** klas kierunków:
+Daje to trzy klasy octavianowych krawędzi:
 
-| Klasa jednostki oktonionowej | Liczba etykiet E₈ | Pojedynczy wyróżniony wyższy poziom |
+| Klasa \(|\operatorname{Re}u|\) | Liczba kierunków | Dwa wyróżnione poziomy |
 |---|---:|---:|
-| \(\operatorname{Re}u=0\) | 126 | 49 |
-| \(|\operatorname{Re}u|=1/2\) | 112 | 49.25 |
-| \(|\operatorname{Re}u|=1\) | 2 | 50 |
+| \(0\) | 126 | \(49,\;49\) |
+| \(1/2\) | 112 | \(48.25,\;50.25\) |
+| \(1\) | 2 | \(48,\;52\) |
 
-Pozostałe poziomy: siedem przy 48,
-sześć przy 50, 49 poziomów
-dwuekscytacyjnych przy energii 96
-oraz jedno zeroenergetyczne \(|0,0\rangle\).
+W każdej klasie jest dodatkowo
+sześć poziomów 48, sześć 52,
+49 poziomów 96 w sektorze
+dwóch wzbudzeń i pojedyncza
+próżnia 0.
 
-Liczba \(|\operatorname{Re}u|\)
-jest niezmiennicza przy mnożeniu
-przez lokalne ramy \(G₂\) po obu
-stronach, ponieważ każdy \(g\in G₂\)
-zachowuje tożsamość \(1\).
-Zatem te klasy są stabilne
-wobec przyjętych zmian ram,
-choć ich przypisanie do konkretnych
-wektorów \(\alpha\) zależy od
-wyboru **niekanonicznej mapy**
+Klasy są niezmiennicze względem
+ram \(G₂\): każdy automorfizm
+oktonionów pozostawia część rzeczywistą.
+Jednak **przyporządkowanie klas
+konkretnym wektorom E₈** zależy
+od niekanonicznej izometrii
 \(E₈\to\mathbb O\).
+Wzór (11) to modelowa,
+bezwymiarowa właściwość widma,
+**nie masa znanej cząstki**.
 
-**Interpretacja:** jest to
-**dokładna, bezwymiarowa, modelowo
-specyficzna własność widma**,
-która rozróżnia rodzaje etykiet.
-Nie jest nową matematyką
-kompresji ortogonalnych macierzy
-ani żadnym już zmierzonym
-stosunkiem mas fizycznych.
-Dla całej sieci trzeba jeszcze
-sprawdzić, czy takie różnice
-są nieusuwalne przez lokalną
-zmianę ram i widoczne w
-fizycznie zdefiniowanych
-wielowęzłowych obserwablach.
+### Jawny transport, nie tylko niediagonalność
+
+Dla jednostki \(u=1\) mamy \(M_7=I_7\).
+Każdy z siedmiu bloków
+\((|a,0\rangle,|0,a\rangle)\)
+ma Hamiltonian
+
+\[
+H_a=\begin{pmatrix}50&-2\\-2&50\end{pmatrix}.
+\]
+
+Początkowe wzbudzenie \(|a,0\rangle\)
+przechodzi do \(|0,a\rangle\)
+z dokładnym prawdopodobieństwem
+
+\[
+\boxed{\Pr(x\to y;t)=\sin^2(2t)}.
+\]
+
+Jest to **standardowa** dynamika dwupoziomowa,
+zastosowana tutaj jako jednoznaczny test
+faktycznego transportu.
+Nie jest unikatowym przewidywaniem
+fizyki oktonionowej.
 
 ## 6. Ograniczenia fizyczne — również te niekorzystne
 
