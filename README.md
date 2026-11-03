@@ -6,6 +6,28 @@
 > lub wartości stałych z jednej mikrodynamiki.
 >
 > 
+**VOPM-015 — jedna lokalna reguła dodatniego transportu i gapped vacuum:**
+
+- `VOPM/GappedVacuum.lean` definiuje `48P_im`, lokalną próżnię
+  `|1⟩∈ℂ⁸`, dodatni dwuwęzłowy operator
+  `B†B` z niediagonalnym hoppingiem oraz twierdzenia
+  o jednoznaczności zeroenergetycznego stanu na parze węzłów;
+- `VOPM/ClosedFrames.lean` sprawdza domknięcie **niebanalnej
+  podgrupy ℤ₂⊂G₂** na niezależne lokalne zmiany ram, bez
+  twierdzenia, że samo `{L_u}` jest pełną lokalną teorią cechowania;
+- `checks/check_covariant_gapped_vacuum.py` certyfikuje
+  wszystkie 240 operatorów octavianowych × 4 wybory
+  ram i dodatniość całego dwuwęzłowego
+  Hamiltonianu na `ℂ⁸⊗ℂ⁸`;
+- [VOPM-015 — model, formalizacja i istotne ograniczenia](docs/VOPM-015_gapped_covariant_vacuum.md).
+
+**Ważne ograniczenie:** próżnia jest **energetycznie
+stabilna, lecz nie jest spontanicznym złamaniem
+lokalnego G₂** (Elitzur 1975). Ściśle lokalne połączenia
+nadal są tłem, czas w Hamiltonianie jest zewnętrzny,
+a szczelinowy model nie odtwarza bezmasowego
+światła, grawitonu lub wymiarów 3+1.
+
 **VOPM-014 — istotna korekta interpretacji holonomii (Clifford + G₂):**
 
 - [audyt literaturowy i ścisłe ograniczenia](docs/VOPM-014_g2_trace_audit.md);
