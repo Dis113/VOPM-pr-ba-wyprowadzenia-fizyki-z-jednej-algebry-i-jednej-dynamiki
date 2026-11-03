@@ -106,6 +106,11 @@ theorem onsiteEnergy_vacuum : onsiteEnergy vacuumSpinor = 0 := by
 def pairOccupation (p : PairBasis) : ℝ :=
   (if p.1 = 0 then 0 else 1) + (if p.2 = 0 then 0 else 1)
 
+theorem pairOccupation_nonneg (p : PairBasis) :
+    0 ≤ pairOccupation p := by
+  unfold pairOccupation
+  split_ifs <;> norm_num
+
 /-- The sum of the two local 48 P_im Hamiltonians on C^8 tensor C^8. -/
 noncomputable def pairOnsiteEnergy (ψ : PairWave) : ℝ :=
   ∑ p : PairBasis, 48 * pairOccupation p * Complex.normSq (ψ p)
@@ -131,10 +136,7 @@ theorem pairOnsiteEnergy_nonneg (ψ : PairWave) :
   unfold pairOnsiteEnergy
   apply Finset.sum_nonneg
   intro p hp
-  have hocc : 0 ≤ pairOccupation p := by
-    unfold pairOccupation
-    split_ifs <;> norm_num
-  exact mul_nonneg (mul_nonneg (by norm_num) hocc)
+  exact mul_nonneg (mul_nonneg (by norm_num) (pairOccupation_nonneg p))
     (Complex.normSq_nonneg _)
 
 theorem bondEnergy_nonneg (T : Fin 8 → Fin 8 → ℂ)
@@ -213,11 +215,7 @@ theorem totalEnergy_zero_forces_vacuum
   unfold pairOnsiteEnergy at hm
   have hterms := (Finset.sum_eq_zero_iff_of_nonneg
     (fun p hp => mul_nonneg
-      (mul_nonneg (by norm_num) (le_of_lt (by
-        by_cases h0 : p = (0, 0)
-        · subst p
-          simp [pairOccupation]
-        · exact pairOccupation_pos p h0)))
+      (mul_nonneg (by norm_num) (pairOccupation_nonneg p))
       (Complex.normSq_nonneg _))).mp hm
   intro p hp
   have hterm := hterms p (Finset.mem_univ p)
