@@ -90,6 +90,16 @@ def bond_double(B):
     return b
 
 
+def bond_double_reverse(T):
+    """2B_yx, with reverse transport T^T, on the SAME 14-dim basis."""
+    b = [[0]*14 for _ in range(7)]
+    for beta in range(1,8):
+        b[beta-1][7+beta-1] = 2
+        for a in range(1,8):
+            b[beta-1][a-1] = -T[a][beta]
+    return b
+
+
 def gram7x14(B2):
     return [[sum(B2[k][i]*B2[k][j] for k in range(7))
              for j in range(14)] for i in range(14)]
@@ -98,7 +108,9 @@ def gram7x14(B2):
 def hamiltonian_four_64(T):
     """4h as 64x64 integer matrix. Basis indexed by 8*a+b."""
     B = bond_double(T)
-    sub = gram7x14(B)
+    Br = bond_double_reverse(T)
+    A, R = gram7x14(B), gram7x14(Br)
+    sub = [[A[i][j] + R[i][j] for j in range(14)] for i in range(14)]
     out = [[0] * 64 for _ in range(64)]
     for a in range(8):
         for b in range(8):
@@ -119,6 +131,13 @@ def frame_covariance(T, Tprime, left_frame, right_frame):
             expected = (g2_sign(left_frame,a) * B[a-1][j] *
                         g2_sign(left_frame,b)*g2_sign(right_frame,c))
             assert BP[a-1][j] == expected, (a,j,expected,BP[a-1][j])
+    Br, BrP = bond_double_reverse(T), bond_double_reverse(Tprime)
+    for beta in range(1,8):
+        for j,(b,c) in enumerate(one_excitation_basis()):
+            expected = (g2_sign(right_frame,beta) * Br[beta-1][j] *
+                        g2_sign(left_frame,b)*g2_sign(right_frame,c))
+            assert BrP[beta-1][j] == expected, (
+                beta,j,expected,BrP[beta-1][j])
 
 
 def check():
@@ -150,19 +169,22 @@ def check():
                     [g2_sign(gx,a) * T[a][b] * g2_sign(gy,b)
                      for b in range(8)] for a in range(8)
                 ]
-                # The norm of transformed bond coefficients is invariant.
-                assert gram7x14(bond_double(dressed)) == [
+                # Both ORIENTATIONS form a single bond energy:
+                # B_xy†B_xy + B_yx†B_yx; its covariance is exact.
+                def symGram(Tlink):
+                    A=gram7x14(bond_double(Tlink))
+                    B=gram7x14(bond_double_reverse(Tlink))
+                    return [[A[i][j]+B[i][j] for j in range(14)]
+                            for i in range(14)]
+                assert symGram(dressed) == [
                     [g2_sign(gx,ai[0])*g2_sign(gy,ai[1])*
                      g2_sign(gx,aj[0])*g2_sign(gy,aj[1])*v
                      for aj,v in zip(one_excitation_basis(),row)]
-                    for ai,row in zip(
-                        one_excitation_basis(),
-                        gram7x14(bond_double(T))
-                    )
+                    for ai,row in zip(one_excitation_basis(),symGram(T))
                 ]
     print("PASS: 240 octavian links x 4 independent Z2 frame choices")
     print("PASS: B_U transforms as an excitation-field covariant difference")
-    print("PASS: B_U^*B_U transforms by the tensor-product local frame action")
+    print("PASS: symmetric (both-orientations) B†B transforms by local frames")
 
     for name,idx in selected.items():
         T=dressed_double_unit(units[idx],False,False)
@@ -188,7 +210,7 @@ def check():
             for b in range(1,8) if H4[8*a][b]
         ]
         assert nonzero_hops, "there must be genuine off-diagonal hopping"
-        assert all(value == -2*T[a][b] for a,b,value in nonzero_hops)
+        assert all(value == -4*T[a][b] for a,b,value in nonzero_hops)
         print(f"PASS: h for {name} is 64x64 Hermitian, gapped, and hops",
               f"({len(nonzero_hops)} nonzero amplitudes)")
 
@@ -201,20 +223,21 @@ def check():
     u1=units[selected["identity"]]
     H1=hamiltonian_four_64(dressed_double_unit(u1,False,False))
     for a in range(1,8):
-        assert H1[8*a][8*a] == H1[a][a] == 196
-        assert H1[8*a][a] == H1[a][8*a] == -4
-    print("PASS: 7 exact u=1 hopping blocks h=[[49,-1],[-1,49]]")
-    print("PASS: analytic two-site transfer probability sin(t)^2, NOT phase-only")
+        assert H1[8*a][8*a] == H1[a][a] == 200
+        assert H1[8*a][a] == H1[a][8*a] == -8
+    print("PASS: 7 exact u=1 hopping blocks h=[[50,-2],[-2,50]]")
+    print("PASS: analytic two-site transfer probability sin(2t)^2")
 
     # A model-specific EXACT single-bond spectral fingerprint. For a
     # real-octonion unit u, the 7x7 compression M=P_im L_u P_im of
     # an orthogonal 8x8 matrix has singular values 1 (six times)
     # and |Re(u)| (once). This is a CLASSICAL matrix-compression
     # result, not a newly discovered theorem of the octonions.
-    # Since B=[I,-M], 7 nonzero bond energies are 1+sigma(M)^2.
-    # The 14 one-excitation energies of h are therefore
-    #     48 (7 times), 50 (6 times), 49+Re(u)^2 (once).
-    # For u=+/-1 all 7 upper values coincide at 50.
+    # Since the symmetric bond uses B+=[I,-M] and B-=[-M†,I],
+    # the one-excitation positive eigenvalues are (1±sigma)^2.
+    # Hence h has: 48(x6), 52(x6), and the pair
+    # 48+(1-|Re(u)|)^2, 48+(1+|Re(u)|)^2.
+    # For u=+/-1 these merge with 48 and 52 respectively.
     # For doubled octavian coordinates u2, Re(u)^2=u2[0]^2/4.
     scalar_classes = {0: 0, 1: 0, 4: 0}
     def matmul7(A,B):
@@ -239,10 +262,10 @@ def check():
             assert K4[i][i] >= 0
     assert scalar_classes == {0:126, 1:112, 4:2}
     print("PASS: ALL 240 compressed imaginary octavian links have exact spectrum")
-    print("  Re(u)^2=0:", scalar_classes[0], "links; upper band at 49")
-    print("  Re(u)^2=1/4:", scalar_classes[1], "links; upper band at 49.25")
-    print("  Re(u)^2=1:", scalar_classes[4], "links; upper band at 50")
-    print("  All have 7 exact modes at 48, six at 50, and one at 49+Re(u)^2")
+    print("  Re(u)^2=0:", scalar_classes[0], "links; special pair 49,49")
+    print("  Re(u)^2=1/4:", scalar_classes[1], "links; special pair 48.25,50.25")
+    print("  Re(u)^2=1:", scalar_classes[4], "links; special pair 48,52")
+    print("  All have six modes at 48, six at 52, plus 48+(1±|Re(u)|)^2")
     print("  Note: this is a model-specific spectral PREDICTION, not an observed mass.")
 
     # The exact ground spinor is |0> at every vertex, not some chosen
