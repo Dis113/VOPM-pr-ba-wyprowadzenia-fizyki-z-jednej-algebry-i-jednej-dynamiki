@@ -603,6 +603,294 @@ modów** i skalozależny
 mogą dać podstawę do
 testu pożądanego 3+1.
 
+
+
+---
+
+## 8. Własna dynamika KWANTOWEGO rdzenia łącza: 240 jednostek integralnych
+
+**To uzupełnienie jest niezbędne:** poprzedni model z
+\(\Gamma\sum(I-X)\) kwantował jedynie **dwa końcowe bity ramy**,
+podczas gdy przypisana pierwiastkowi
+jednostka oktonionowa \(u_\alpha\) pozostawała nieruchomym rdzeniem.
+Aby wypróbować również jej kwantową dynamikę,
+wprowadzamy na **każdej nieskierowanej krawędzi**
+pomocniczą przestrzeń \(\mathbb C^{240}\) z bazą
+\(\{|u\rangle:u\in\mathcal U_{\mathrm{oct}}\}\).
+
+W rezultacie pełny link na próbę
+ma przestrzeń
+\(\mathbb C^{240}\otimes\mathbb C^2\otimes\mathbb C^2\),
+o wymiarze **960 na krawędź**.
+To zdecydowanie nie jest jeszcze
+minimalny model z samymi 16 realnymi
+stopniami swobody w węźle.
+Wariant opisujemy jako **jawny model
+kontrolny**, nie ostateczną ontologię VOPM.
+
+### Ruch na pętli Moufanga i jego nieoczekiwana redukcja do geometrii E₈
+
+Niech
+\[
+\mathcal U=\{u\in\mathbb O_\mathrm{int}:|u|=1\},
+\qquad |\mathcal U|=240
+\]
+oraz
+\[
+S=\{w\in\mathcal U:\operatorname{Re}w=0\},
+\qquad |S|=126.
+\]
+
+Wybór generatorów \(S\) jest
+wyróżniony przez część rzeczywistą
+oktonionów i nie wybiera jednej
+płaszczyzny kwaternionowej.
+**Uwaga:** pełna ciągła grupa \(G₂\)
+nie zachowuje ogólnie wybranego
+skończonego porządku całkowitych
+oktonionów; co najwyżej jego
+odpowiednią podgrupę arytmetyczną.
+
+Każdy operator prawego mnożenia
+\(|u\rangle\mapsto|uw\rangle\)
+dla \(w\in S\) jest permutacją
+240 etykiet. Ponieważ
+\(\bar w=-w\) też należy do \(S\),
+ich symetryczna suma definiuje
+zwykłą rzeczywistą
+macierz sąsiedztwa \(A\) z
+126 sąsiadami przy każdym węźle
+i dodatni Hamiltonian łącza:
+
+\[
+\boxed{
+K_{\mathrm{oct}}=126I-A,\qquad
+\langle\psi,K_{\mathrm{oct}}\psi\rangle=
+\frac12\sum_{u\sim v}
+|\psi(u)-\psi(v)|^2\ge0.
+}
+\tag{14}
+\]
+
+**Kluczowy modelowo-specyficzny no-go:**
+znana własność normowanej algebry
+kompozycyjnej daje
+\[
+v=uw,\quad\operatorname{Re}w=0
+\quad\Longleftrightarrow\quad
+\operatorname{Re}(\bar u v)=0
+\quad\Longleftrightarrow\quad
+\langle u,v\rangle=0.
+\tag{15}
+\]
+
+Zatem **cała macierz \(A\) jest dokładnie
+grafem ortogonalności 240 pierwiastków E₈**.
+Każde odwołanie do konkretnego
+mnożenia oktonionowego można
+zastąpić czysto metrycznym
+warunkiem w \(\mathbb R^8\).
+
+Tożsamość (15) jest **znaną matematyką**;
+nie zgłaszamy jej jako odkrycia.
+Naszą własną kontrolą jest dokładne
+sprawdzenie wszystkich 240×126
+odpowiadających jej przejść
+na bieżącej tablicy Lean.
+
+### Dokładne widmo bez diagonalizacji numerycznej
+
+Oznaczmy przez \(P\)
+permutację antypodalną
+\(u\mapsto-u\) i przez \(J\)
+macierz samych jedynek.
+Sprawdzamy **dokładnie** wszystkie
+57 600 wpisów następującej
+klasycznej tożsamości
+grafu pierwiastków:
+
+\[
+\boxed{
+A^2=54(I+P)+72J-12A.
+}
+\tag{16}
+\]
+
+Weryfikacja dodatkowo pokazuje
+\(AP=A\), \(AJ=126J\),
+\(P^2=I\) i \(\operatorname{tr}A=0\).
+
+Na 120-wymiarowym
+nieparzystym podprzestrzeni
+\(P=-I\) operator \(A=0\).
+Na pozostałej 120-wymiarowej
+przestrzeni parzystej jest
+jeden stan jednostajny
+z wartością 126, a
+pozostałe wartości spełniają
+\[
+\lambda^2+12\lambda-108=0,
+\quad\lambda\in\{6,-18\}.
+\]
+Z równości wymiarów
+i śladu wyliczamy krotności
+bez przybliżeń:
+
+\[
+\boxed{
+\operatorname{spec}(A)=
+\{126[1],\,6[84],\,0[120],\,-18[35]\},
+}
+\tag{17}
+\]
+\[
+\boxed{
+\operatorname{spec}(K_{\mathrm{oct}})=
+\{0[1],\,120[84],\,126[120],\,144[35]\}.
+}
+\tag{18}
+\]
+
+Przy wybranej dodatniej skali
+\(\tau>0\) rdzeń łącza
+ma **jedną** stanową
+superpozycję zerową
+\[
+|+\!_{\mathrm{oct}}\rangle=
+\frac1{\sqrt{240}}\sum_{u\in\mathcal U}|u\rangle,
+\quad
+\Delta_{\mathrm{oct}}=120\tau.
+\]
+
+To **nie jest nowy wynik ogólny
+o grafach E₈**:
+reprodukujemy klasyczną
+kombinatorykę 240 pierwiastków
+(opublikowane np. w pracy
+*The Action of the Weyl Group on
+the E₈ Root System*, Graphs
+and Combinatorics 37 (2021),
+DOI 10.1007/s00373-021-02315-8).
+Własny wkład implementacyjny
+polega na pokazaniu, że
+wybrany *algorytm dynamiki
+rdzenia oktonionowego* nie
+wnosi danych poza tą
+klasyczną metryką.
+
+### Jedna konstrukcja obejmująca materię i oba rodzaje ruchu łączy
+
+Możemy dopisać do dodatniego
+Hamiltonianu (4) **naprawdę
+kwantowe** fluktuacje
+rdzenia octavianowego:
+
+\[
+\boxed{
+H_{\mathrm{full}}=
+48\sum_xP_x+
+\sum_{\{x,y\}}
+\bigl(B_{xy}^{\dagger}B_{xy}
++B_{yx}^{\dagger}B_{yx}\bigr)
++\Gamma\sum_{(e,v)}(I-X_{e,v})
++\tau\sum_e K_{\mathrm{oct},e}.
+}
+\tag{19}
+\]
+
+Elementy transportu \(B\)
+zależą diagonalnie
+od aktualnego kwantowego
+stanu \(u_e\) i bitów ramy.
+Dwie pozostałe sumy
+mieszają **te** stany;
+formalnie jest to jedna
+lokalna ewolucja Hamiltonianowa.
+
+Przy \(\Gamma,\tau>0\)
+mamy **standardowy**, niezależny
+od rozmiaru grafu wynik o
+dodatnich Hamiltonianach
+bez frustracji:
+
+\[
+|\Omega_{\mathrm{full}}\rangle=
+\bigotimes_x|1\rangle_x
+\otimes
+\bigotimes_{(e,v)}|+\rangle_{e,v}
+\otimes
+\bigotimes_e|+\!_{\mathrm{oct}}\rangle_e,
+\]
+\[
+\boxed{
+H_{\mathrm{full}}\ge
+\min(48,2\Gamma,120\tau)
+\left(I-|\Omega_{\mathrm{full}}\rangle
+\langle\Omega_{\mathrm{full}}|\right).
+}
+\tag{20}
+\]
+
+Wszystkie \(B^\dagger B\ge0\)
+anihilują stan próżni materii,
+a składnik \(K\) anihiluje
+jednostajny stan rdzenia.
+To znana argumentacja spektralna,
+nie nowy ogólny dowód.
+
+**Wniosek fizyczny:** nawet po
+uczynieniu samego \(u\)
+dynamiczną zmienną kwantową
+ten najprostszy, najbardziej
+symetryczny model pozostaje
+**ściśle szczelinowy**.
+Nie otrzymujemy fotonu,
+grawitonu ani redukcji
+8D do efektywnych 3D.
+Dopiero
+operator zależny od
+**uporządkowanych, niełącznych
+iloczynów kilku transportów**
+ma szansę wyjść poza
+tę metryczną klasę kontrolną.
+
+\`VOPM/QuantumOctavianCore.lean\`:
+definicja i dodatniość formy
+kwadratowej, symetria
+ortogonalności i zerowa
+energia stałej funkcji.
+
+\`checks/check_quantum_octavian_core.py\`:
+wszystkie 30 240 przejść
+prawego mnożenia, 57 600
+porównań ortogonalności,
+dokładne (16) i (18)
+oraz test automorfizmu.
+Widmo (18) jest
+**dokładną kontrolą Python i
+znaną matematyką E₈**,
+jeszcze nie pełnym jądrowym
+dowodem 240-wymiarowego
+spektrum w Lean.
+
+**Ograniczenie istotne dla
+ontologii:** fluktuująca
+jednostka \(u_e\) nie
+musi być w każdej chwili
+równa sztywnej mapie
+\(\Phi(\alpha_e)\) z VOPM-012.
+Trzeba przyjąć interpretację
+\[
+u_e(t)=\Phi(\alpha_e)\,w_e(t),
+\]
+gdzie \(w_e\) jest
+zmienną kwantową,
+albo wyprowadzić
+bardziej restrykcyjne
+więzy. To dodatkowa
+hipoteza, nie konsekwencja
+samego \(E₈\).
+
 ## Literatura pierwszeństwa
 
 - F. J. Wegner (1971), *Duality in generalized Ising models
