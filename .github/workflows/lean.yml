@@ -59,3 +59,6 @@ jobs:
 
       - name: Clifford trace blindspot and G2 four-edge control
         run: python3 checks/check_g2_trace_blindspot.py
+
+      - name: Gauge-covariant positive hopping and unique vacuum
+        run: python3 checks/check_covariant_gapped_vacuum.py

@@ -14,3 +14,5 @@ import VOPM.OctavianProduct
 import VOPM.OctavianHolonomy
 import VOPM.G2TraceAudit
 import VOPM.LocalGaugeObstruction
+import VOPM.GappedVacuum
+import VOPM.ClosedFrames
