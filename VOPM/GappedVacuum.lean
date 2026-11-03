@@ -78,20 +78,19 @@ theorem onsiteEnergy_nonneg (v : Vec) : 0 ≤ onsiteEnergy v := by
   unfold onsiteEnergy
   apply Finset.sum_nonneg
   intro a ha
-  split_ifs <;> positivity
+  split_ifs <;> nlinarith [Complex.normSq_nonneg (v a)]
 
 /-- A zero on-site energy forces all seven imaginary coordinates to vanish. -/
 theorem onsiteEnergy_zero_iff (v : Vec) :
     onsiteEnergy v = 0 ↔ ∀ a : Fin 8, a ≠ 0 → v a = 0 := by
   unfold onsiteEnergy
   rw [Finset.sum_eq_zero_iff_of_nonneg
-    (fun a ha => by split_ifs <;> positivity)]
+    (fun a ha => by split_ifs <;> nlinarith [Complex.normSq_nonneg (v a)])]
   constructor
   · intro h a ha
     have hterm := h a (Finset.mem_univ a)
     simp [ha] at hterm
-    have hz : Complex.normSq (v a) = 0 := by nlinarith
-    exact Complex.normSq_eq_zero.mp hz
+    exact hterm
   · intro h a ha
     by_cases h0 : a = 0
     · simp [h0]
@@ -144,7 +143,7 @@ theorem bondEnergy_nonneg (T : Fin 8 → Fin 8 → ℂ)
   unfold bondEnergy
   apply Finset.sum_nonneg
   intro a ha
-  split_ifs <;> positivity
+  split_ifs <;> nlinarith [Complex.normSq_nonneg (bondDifference T ψ a)]
 
 /-- A single autonomous local Hamiltonian via its quadratic form. -/
 noncomputable def totalEnergy (T : Fin 8 → Fin 8 → ℂ)
@@ -176,8 +175,20 @@ theorem bondEnergy_vacuum (T : Fin 8 → Fin 8 → ℂ) :
   intro a ha
   by_cases hz : a = 0
   · simp [hz]
-  · have hdiff : bondDifference T vacuumPair a = 0 := by
-      simp [bondDifference, vacuumPair, hz]
+  · have hleft : vacuumPair (a, 0) = 0 := by
+      simp [vacuumPair, hz]
+    have hsum :
+        (∑ b : Fin 8, if b = 0 then 0
+          else T a b * vacuumPair (0, b)) = 0 := by
+      apply Finset.sum_eq_zero
+      intro b hb
+      by_cases hzero : b = 0
+      · simp [hzero]
+      · simp [vacuumPair, hzero]
+    have hdiff : bondDifference T vacuumPair a = 0 := by
+      unfold bondDifference
+      rw [hleft, hsum]
+      ring
     simp [hz, hdiff]
 
 theorem totalEnergy_vacuum (T : Fin 8 → Fin 8 → ℂ) :
