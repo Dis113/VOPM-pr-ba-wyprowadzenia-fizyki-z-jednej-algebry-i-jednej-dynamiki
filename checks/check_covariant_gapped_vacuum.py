@@ -192,6 +192,20 @@ def check():
         print(f"PASS: h for {name} is 64x64 Hermitian, gapped, and hops",
               f"({len(nonzero_hops)} nonzero amplitudes)")
 
+    # Direct transport (not merely matrix off-diagonality):
+    # for u=1, the seven two-state blocks |a,0>,|0,a> have
+    # h=[[49,-1],[-1,49]] (in units h=H4/4). Starting in
+    # |a,0>, standard 2-level unitary evolution gives a transfer
+    # probability sin(t)^2 into |0,a>. The exact matrices below
+    # certify those Hamiltonian coefficients without floats.
+    u1=units[selected["identity"]]
+    H1=hamiltonian_four_64(dressed_double_unit(u1,False,False))
+    for a in range(1,8):
+        assert H1[8*a][8*a] == H1[a][a] == 196
+        assert H1[8*a][a] == H1[a][8*a] == -4
+    print("PASS: 7 exact u=1 hopping blocks h=[[49,-1],[-1,49]]")
+    print("PASS: analytic two-site transfer probability sin(t)^2, NOT phase-only")
+
     # A model-specific EXACT single-bond spectral fingerprint. For a
     # real-octonion unit u, the 7x7 compression M=P_im L_u P_im of
     # an orthogonal 8x8 matrix has singular values 1 (six times)
