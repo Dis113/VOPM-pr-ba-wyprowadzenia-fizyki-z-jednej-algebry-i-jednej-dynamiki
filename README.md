@@ -6,6 +6,36 @@
 > lub wartości stałych z jednej mikrodynamiki.
 >
 > 
+**VOPM-016 — dynamika KWANTOWYCH łączy i test niskoenergetycznej fazy:**
+
+- `VOPM/DynamicLinks.lean`: dwa kwantowe bity ramy na krawędź,
+  lokalne generatory `ℤ₂⊂G₂` i dokładny Gauss,
+  kinetyczne przełączanie linków `X` i dodatnia energia;
+- `checks/check_dynamic_links.py`: 240 etykiet octavianowych,
+  960 przypadków kowariancji, pełne bloki 256×256
+  i bezmasowy **no-go** dla dodatniego
+  `H_parent` z luką `≥min(48,2Γ)` przy `Γ>0`;
+- `checks/check_dynamic_plaquette.py`: kwantowy trójkąt E₈
+  `(1,14,37)`, magnetyczny ślad pętli,
+  3 lokalne więzy Gaussa redukujące 64 stany do 8
+  i **dokładne** widmo dla `Γ=1,μ=4`
+  `{9±√37, 9±√5 [×3]}`;
+- **silna kontrola nowości:** cały fizyczny
+  Hamiltonian trójkąta jest równoważny standardowemu
+  modelowi `ℤ₂` z trywialnymi rdzeniami
+  po zmianie skali sprzężenia magnetycznego
+  oraz wspólnym przesunięciu energii.
+  **Nie ogłaszamy nowej fizyki** na podstawie tego modelu;
+- [VOPM-016: pełna analiza i recenzowana literatura](docs/VOPM-016_dynamic_links_phase_test.md).
+
+Jest to **pomocnicze kwantowanie podgrupy ℤ₂**,
+nie dynamika pełnej ciągłej grupy `G₂`.
+Dwa bity na łącze zwiększają liczbę
+mikroskopowych stopni swobody, co trzeba
+ostatecznie uzasadnić lub wyeliminować.
+Nie wyprowadziliśmy fazy 3+1,
+fotonu, grawitonu ani SM.
+
 **VOPM-015 — jedna lokalna reguła dodatniego transportu i gapped vacuum:**
 
 - `VOPM/GappedVacuum.lean` definiuje `48P_im`, lokalną próżnię
