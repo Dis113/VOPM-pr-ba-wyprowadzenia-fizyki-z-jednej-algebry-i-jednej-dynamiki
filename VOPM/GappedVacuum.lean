@@ -145,15 +145,70 @@ theorem bondEnergy_nonneg (T : Fin 8 → Fin 8 → ℂ)
   intro a ha
   split_ifs <;> nlinarith [Complex.normSq_nonneg (bondDifference T ψ a)]
 
+/-- Reverse an oriented link via its adjoint, not the negative-root label. -/
+def linkAdjoint (T : Fin 8 → Fin 8 → ℂ) : Fin 8 → Fin 8 → ℂ :=
+  fun a b => star (T b a)
+
+/-- Swap the two tensor factors of a wave in the computational basis. -/
+def swapPair (ψ : PairWave) : PairWave :=
+  fun p => ψ (p.2, p.1)
+
+theorem linkAdjoint_involution (T : Fin 8 → Fin 8 → ℂ) :
+    linkAdjoint (linkAdjoint T) = T := by
+  funext a b
+  simp [linkAdjoint]
+
+theorem swapPair_involution (ψ : PairWave) :
+    swapPair (swapPair ψ) = ψ := by
+  funext p
+  cases p
+  rfl
+
+/--
+Orientation-independent positive edge contribution. The old one-sided
+bond term is not symmetric if the compressed octavian link is not unitary.
+-/
+noncomputable def symmetricBondEnergy
+    (T : Fin 8 → Fin 8 → ℂ) (ψ : PairWave) : ℝ :=
+  bondEnergy T ψ + bondEnergy (linkAdjoint T) (swapPair ψ)
+
+theorem symmetricBondEnergy_nonneg
+    (T : Fin 8 → Fin 8 → ℂ) (ψ : PairWave) :
+    0 ≤ symmetricBondEnergy T ψ := by
+  unfold symmetricBondEnergy
+  exact add_nonneg (bondEnergy_nonneg T ψ)
+    (bondEnergy_nonneg (linkAdjoint T) (swapPair ψ))
+
+/-- The same physical edge energy after reversing the edge orientation. -/
+theorem symmetricBondEnergy_orientation
+    (T : Fin 8 → Fin 8 → ℂ) (ψ : PairWave) :
+    symmetricBondEnergy T ψ =
+      symmetricBondEnergy (linkAdjoint T) (swapPair ψ) := by
+  simp [symmetricBondEnergy, linkAdjoint_involution,
+    swapPair_involution, add_comm]
+
+theorem swapPair_vacuum : swapPair vacuumPair = vacuumPair := by
+  funext p
+  cases p with
+  | mk a b =>
+      by_cases ha : a = 0 <;>
+        by_cases hb : b = 0 <;>
+          simp [swapPair, vacuumPair, ha, hb]
+
+theorem symmetricBondEnergy_vacuum
+    (T : Fin 8 → Fin 8 → ℂ) :
+    symmetricBondEnergy T vacuumPair = 0 := by
+  simp [symmetricBondEnergy, bondEnergy_vacuum, swapPair_vacuum]
+
 /-- A single autonomous local Hamiltonian via its quadratic form. -/
 noncomputable def totalEnergy (T : Fin 8 → Fin 8 → ℂ)
     (ψ : PairWave) : ℝ :=
-  pairOnsiteEnergy ψ + bondEnergy T ψ
+  pairOnsiteEnergy ψ + symmetricBondEnergy T ψ
 
 theorem totalEnergy_nonneg (T : Fin 8 → Fin 8 → ℂ)
     (ψ : PairWave) : 0 ≤ totalEnergy T ψ := by
   unfold totalEnergy
-  exact add_nonneg (pairOnsiteEnergy_nonneg ψ) (bondEnergy_nonneg T ψ)
+  exact add_nonneg (pairOnsiteEnergy_nonneg ψ) (symmetricBondEnergy_nonneg T ψ)
 
 /-- The two-site product spinor |1,1> (both scalar coordinates). -/
 def vacuumPair : PairWave :=
@@ -194,7 +249,7 @@ theorem bondEnergy_vacuum (T : Fin 8 → Fin 8 → ℂ) :
 theorem totalEnergy_vacuum (T : Fin 8 → Fin 8 → ℂ) :
     totalEnergy T vacuumPair = 0 := by
   unfold totalEnergy
-  rw [pairOnsiteEnergy_vacuum, bondEnergy_vacuum]
+  rw [pairOnsiteEnergy_vacuum, symmetricBondEnergy_vacuum]
   norm_num
 
 /-- The local excitation count is strictly positive off |0,0>. -/
@@ -219,7 +274,7 @@ theorem totalEnergy_zero_forces_vacuum
     (h : totalEnergy T ψ = 0) :
     ∀ p : PairBasis, p ≠ (0, 0) → ψ p = 0 := by
   have hm_nonneg := pairOnsiteEnergy_nonneg ψ
-  have hb_nonneg := bondEnergy_nonneg T ψ
+  have hb_nonneg := symmetricBondEnergy_nonneg T ψ
   have hm : pairOnsiteEnergy ψ = 0 := by
     unfold totalEnergy at h
     linarith
