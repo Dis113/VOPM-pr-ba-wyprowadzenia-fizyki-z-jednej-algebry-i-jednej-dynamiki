@@ -77,3 +77,6 @@ jobs:
 
       - name: Magnetic octavian E8 plaquette and exact physical spectrum
         run: python3 checks/check_dynamic_plaquette.py
+
+      - name: Exact 240-state quantum octavian core and spectral orthogonality no-go
+        run: python3 checks/check_quantum_octavian_core.py
