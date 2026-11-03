@@ -299,6 +299,98 @@ dodatnie certyfikaty. Nie jest to
 nowy dowód abstrakcyjnej kowariancji
 dla każdej macierzy rzeczywistego \(G₂\).
 
+## 5a. Dokładne, zależne od etykiety widmo jednego łącza
+
+W modelu VOPM-015 dyskretny kierunek \(\alpha\) etykietuje
+oktonion jednostkowy \(u_\alpha\). W przeciwieństwie do samej
+bramki SWAP+CZ z VOPM-012, **jedno-linkowe widmo
+wzbudzeń może zależeć od etykiety oktonionowej**.
+
+Dla skrótu \(M=P L_u P\) oznaczmy przez \(M_7\)
+jego macierz na siedmiu kierunkach urojonych.
+Ponieważ \(L_u\) jest macierzą ortogonalną 8×8
+oraz \(L_u(1)=u\), znane twierdzenia o kompresji
+izometrii (rozłożenie CS) dają wartości
+singularne \(M_7\) równe
+
+\[
+1,1,1,1,1,1,\ |\operatorname{Re}u|.
+\]
+
+Stąd na sektorze jednego wzbudzenia
+dwuwęzłowego układu
+\[
+H_{1\mathrm{ex}}=48 I_{14}+B^\dagger B,
+\quad B=(I_7,-M_7),
+\]
+więc
+
+\[
+\boxed{
+\operatorname{spec}(H_{1\mathrm{ex}})
+=\underbrace{\{48,\ldots,48\}}_{7}
+\cup\underbrace{\{50,\ldots,50\}}_{6}
+\cup\{49+(\operatorname{Re}u)^2\}.
+}
+\tag{10}
+\]
+
+Przy \(\operatorname{Re}u=\pm1\) ostatni
+poziom zlewa się z innymi poziomami 50.
+
+**Weryfikacja konkretnego VOPM:** skrypt
+\`checks/check_covariant_gapped_vacuum.py\`
+czyta **wszystkie 240 jednostek**,
+dla każdej tworzy dokładną całkowitą
+macierz \(K_4=(2M_7)^\top(2M_7)\) i sprawdza
+wielomian:
+
+\[
+\bigl(K_4-4I\bigr)\,
+\bigl(K_4-(2\operatorname{Re}u)^2I\bigr)=0
+\]
+
+oraz \(\mathrm{tr}(K_4)=24+(2\operatorname{Re}u)^2\).
+Testy prowadzą do **trzech** klas kierunków:
+
+| Klasa jednostki oktonionowej | Liczba etykiet E₈ | Pojedynczy wyróżniony wyższy poziom |
+|---|---:|---:|
+| \(\operatorname{Re}u=0\) | 126 | 49 |
+| \(|\operatorname{Re}u|=1/2\) | 112 | 49.25 |
+| \(|\operatorname{Re}u|=1\) | 2 | 50 |
+
+Pozostałe poziomy: siedem przy 48,
+sześć przy 50, 49 poziomów
+dwuekscytacyjnych przy energii 96
+oraz jedno zeroenergetyczne \(|0,0\rangle\).
+
+Liczba \(|\operatorname{Re}u|\)
+jest niezmiennicza przy mnożeniu
+przez lokalne ramy \(G₂\) po obu
+stronach, ponieważ każdy \(g\in G₂\)
+zachowuje tożsamość \(1\).
+Zatem te klasy są stabilne
+wobec przyjętych zmian ram,
+choć ich przypisanie do konkretnych
+wektorów \(\alpha\) zależy od
+wyboru **niekanonicznej mapy**
+\(E₈\to\mathbb O\).
+
+**Interpretacja:** jest to
+**dokładna, bezwymiarowa, modelowo
+specyficzna własność widma**,
+która rozróżnia rodzaje etykiet.
+Nie jest nową matematyką
+kompresji ortogonalnych macierzy
+ani żadnym już zmierzonym
+stosunkiem mas fizycznych.
+Dla całej sieci trzeba jeszcze
+sprawdzić, czy takie różnice
+są nieusuwalne przez lokalną
+zmianę ram i widoczne w
+fizycznie zdefiniowanych
+wielowęzłowych obserwablach.
+
 ## 6. Ograniczenia fizyczne — również te niekorzystne
 
 - **Brak masowo zerowych wzbudzeń**:
