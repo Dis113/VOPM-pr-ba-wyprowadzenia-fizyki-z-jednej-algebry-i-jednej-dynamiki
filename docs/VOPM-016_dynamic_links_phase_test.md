@@ -214,6 +214,47 @@ przestrzeni, dodatkowych więzów
 lub wyprowadzenia łączy jako
 zmiennych złożonych.
 
+### Obserwabla, której naprawdę zmienia się wartość
+
+Na **pojedynczej** krawędzi oba bity ram
+należą do różnych węzłów i po projekcji
+Gaussa nie reprezentują niezależnego
+kwantowego pola w próżni materii.
+Dlatego sam niezerowy element
+\(\langle b'|H_E|b\rangle\)
+nie wystarczałby do wykazania
+fizycznej dynamiki łącza.
+
+Przy **dwóch różnych krawędziach
+spotykających się w jednym węźle**
+mamy natomiast dwa bity ram
+\(h_1,h_2\) transformowane równocześnie
+przez tamtejszy Gauss:
+\((h_1,h_2)\mapsto(h_1\oplus1,h_2\oplus1)\).
+Względna parzystość
+\[
+R_v=(-1)^{h_1+h_2}
+\]
+jest **niezmiennicza względem tego
+lokalnego Gaussa**, ale
+pojedynczy elektryczny flip
+\(X_1\) zmienia jej znak:
+\[
+\boxed{X_1 R_v X_1=-R_v}.
+\]
+Stąd dla \(\Gamma>0\)
+\([H_E,R_v]\ne0\).
+Jest to autentyczna, mała
+obserwabla gauge-invariant,
+której dynamika nie jest
+jedynie zmianą reprezentacji.
+
+\`VOPM/DynamicLinks.lean\`
+zawiera jawny dowód tych
+dwóch tożsamości na
+wszystkich czterech
+lokalnych konfiguracjach.
+
 ## 4. Dodatkowy człon magnetyczny — rzeczywisty trójkąt E₈
 
 Zgodnie z Hamiltonianową
